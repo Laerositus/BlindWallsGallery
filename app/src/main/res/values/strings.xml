@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BlindWallsGallery</string>
+    <string name="mural_img_first">Image of the mural</string>
+    <string name="test">Hello world!</string>
 </resources>
