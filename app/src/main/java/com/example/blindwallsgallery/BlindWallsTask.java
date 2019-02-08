@@ -68,26 +68,22 @@ public class BlindWallsTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+    protected void onPostExecute(String response) {
+        super.onPostExecute(response);
         Log.d(TAG,"onPostExecute() was called.");
-        Log.d(TAG,"Response: "+s);
+        Log.d(TAG,"Response: "+response);
 
         try {
-            JSONObject jsonObject=new JSONObject(s);
-            JSONArray results=jsonObject.getJSONArray("");
-            List<Mural> murals=makeMuralFromApi(s);
+            List<Mural> murals=makeMuralFromApi(response);
             listener.onMuralListenerAvailable(murals);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public List<Mural> makeMuralFromApi(String response){
+    public List<Mural> makeMuralFromApi(String response) throws JSONException {
         List<Mural> murals=new ArrayList<>();
-        try {
-            JSONObject jsonObject=new JSONObject(response);
-            JSONArray results=jsonObject.getJSONArray("");
+            JSONArray results= new JSONArray(response);
 
             for(int n=0;n<results.length();n++) {
 
@@ -135,9 +131,6 @@ public class BlindWallsTask extends AsyncTask<Void, Void, String> {
 
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return murals;
     }
 
