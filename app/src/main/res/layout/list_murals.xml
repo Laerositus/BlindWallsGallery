@@ -19,7 +19,7 @@
             android:contentDescription="@string/mural_img_first"/>
 
         <TextView
-            android:id="@+id/tv_author_name"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/test" />

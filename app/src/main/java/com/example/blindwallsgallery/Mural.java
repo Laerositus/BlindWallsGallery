@@ -54,6 +54,8 @@ public class Mural {
         this.imageUrls = imageUrls;
     }
 
+
+
     /*
     Getters for all attributes
      */

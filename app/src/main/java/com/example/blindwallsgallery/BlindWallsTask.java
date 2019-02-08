@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class BlindWallsTask extends AsyncTask<Void, Void, String> {
 
     final private String TAG = BlindWallsTask.class.getSimpleName();
-    final private String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murels";
+    final private String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
 
     @Override
     protected void onPreExecute() {
@@ -28,7 +28,7 @@ public class BlindWallsTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
-        Log.d(TAG, "doinbackground was called");
+        Log.d(TAG, "doInBackground was called");
 
         String response = null;
 
@@ -68,6 +68,18 @@ public class BlindWallsTask extends AsyncTask<Void, Void, String> {
         Log.d(TAG,"onPostExecute() was called.");
         Log.d(TAG,"Response: "+s);
 
+        try {
+            JSONObject jsonObject=new JSONObject(s);
+            JSONArray results=jsonObject.getJSONArray("");
+            List<Mural> murals=makeMuralFromApi(s);
+            for(int i=0;i<results.length();i++){
+                murals.get(i).getTitleEN();
+                WallsAdapter
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Mural> makeMuralFromApi(String response){

@@ -4,16 +4,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
 
     private RecyclerView mRecyclerView;
     private WallsAdapter mWallsAdapter;
+    private TextView mTitle;
     private Toast mToast;
 
-
-    private static final int temp_mNumOfItems=23;
+    private static final int temp_mNumOfItems=5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         setContentView(R.layout.activity_main);
 
         mRecyclerView= findViewById(R.id.rv_main_rv);
+        mTitle=findViewById(R.id.tv_title);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -36,10 +38,12 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         if(mToast!=null){
             mToast.cancel();
         }
-
         String message="Item #"+index+" selected.";
         mToast=Toast.makeText(this, message, Toast.LENGTH_LONG);
-
         mToast.show();
+
+
     }
+
+
 }
