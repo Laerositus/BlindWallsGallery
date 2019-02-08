@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHolder> {
@@ -24,11 +25,11 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHo
     private BlindWallsTask blindWallsTask;
 
 
+
     public WallsAdapter(int mNumberOfItems, ItemClickListener listener) {
         this.mOnClickListener=listener;
         this.mNumberOfItems = mNumberOfItems;
         viewHolderCount=0;
-        blindWallsTask=new BlindWallsTask();
     }
 
     public interface ItemClickListener{
@@ -75,7 +76,11 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHo
         }
 
         public void bind(String text){
-            mListMurals.setText();
+            mListMurals.setText(text);
         }
+
+
     }
+
+
 }

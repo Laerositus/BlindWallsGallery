@@ -20,6 +20,11 @@ public class BlindWallsTask extends AsyncTask<Void, Void, String> {
 
     final private String TAG = BlindWallsTask.class.getSimpleName();
     final private String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
+    private MuralListener listener;
+
+    protected BlindWallsTask(MuralListener listener) {
+        this.listener = listener;
+    }
 
     @Override
     protected void onPreExecute() {
@@ -72,11 +77,7 @@ public class BlindWallsTask extends AsyncTask<Void, Void, String> {
             JSONObject jsonObject=new JSONObject(s);
             JSONArray results=jsonObject.getJSONArray("");
             List<Mural> murals=makeMuralFromApi(s);
-            for(int i=0;i<results.length();i++){
-                murals.get(i).getTitleEN();
-                WallsAdapter
-            }
-
+            listener.onMuralListenerAvailable(murals);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,5 +139,9 @@ public class BlindWallsTask extends AsyncTask<Void, Void, String> {
             e.printStackTrace();
         }
         return murals;
+    }
+
+    public interface MuralListener {
+        public void onMuralListenerAvailable(List<Mural> list);
     }
 }
