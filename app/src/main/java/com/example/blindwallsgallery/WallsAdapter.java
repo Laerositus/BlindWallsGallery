@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHolder> {
 
@@ -30,7 +29,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHo
     @Override
     public AuthorViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context=viewGroup.getContext();
-        int layoutIdForListItem=R.layout.list_authors;
+        int layoutIdForListItem=R.layout.list_murals;
         LayoutInflater inflater=LayoutInflater.from(context);
         boolean shouldAttatchToParent=false;
 
