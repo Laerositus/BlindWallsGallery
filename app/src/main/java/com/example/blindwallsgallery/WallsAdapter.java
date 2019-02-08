@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHolder> {
@@ -13,8 +14,9 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHo
     private static int viewHolderCount;
     private int mNumberOfItems;
     private final ItemClickListener mOnClickListener;
+    private ImageView mAuthorImage;
 
-    public WallsAdapter(int mNumberOfItems, ItemClickListener listener) {
+    WallsAdapter(int mNumberOfItems, ItemClickListener listener) {
         this.mOnClickListener=listener;
         this.mNumberOfItems = mNumberOfItems;
         viewHolderCount=0;
@@ -24,15 +26,16 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHo
         void onItemClick(int index);
     }
 
+    @NonNull
     @Override
     public AuthorViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context=viewGroup.getContext();
-//        int layoutIdForListItem=R.layout.
+        int layoutIdForListItem=R.layout.list_authors;
         LayoutInflater inflater=LayoutInflater.from(context);
         boolean shouldAttatchToParent=false;
 
-//        View view=inflater.inflate(layoutIdForListItem,viewGroup,shouldAttatchToParent );
-        return new AuthorViewHolder();
+        View view=inflater.inflate(layoutIdForListItem,viewGroup,shouldAttatchToParent);
+        return new AuthorViewHolder(view);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHo
 
     public class AuthorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public AuthorViewHolder(View itemView) {
+        AuthorViewHolder(View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(this);

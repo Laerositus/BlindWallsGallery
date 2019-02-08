@@ -10,7 +10,6 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     private RecyclerView mRecyclerView;
     private WallsAdapter mWallsAdapter;
-//    private WallsAdapter.ItemClickListener listener;
     private Toast mToast;
 
 
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView=(RecyclerView) findViewById(R.id.rv_main_rv);
+        mRecyclerView= findViewById(R.id.rv_main_rv);
 
         mRecyclerView.setHasFixedSize(true);
 
