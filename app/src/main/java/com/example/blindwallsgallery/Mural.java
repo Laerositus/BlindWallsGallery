@@ -1,6 +1,7 @@
 package com.example.blindwallsgallery;
 
 import java.net.URL;
+import java.util.List;
 
 public class Mural {
 
@@ -8,8 +9,8 @@ public class Mural {
     private String date;
     private int authorID;
     private String address;
-    private int nimberOnMap;
-    private URL videoUrl;
+    private int numberOnMap;
+    private String videoUrl;
     private int year;
     private String photographer;
     private String videoAuthor;
@@ -23,17 +24,17 @@ public class Mural {
     private String authorDescNL;
     private String materialEN;
     private String materialNL;
-    private String CategoryEN;
-    private String CategoryNL;
-    private String[] images;
+    private String categoryEN;
+    private String categoryNL;
+    private List<String> imageUrls;
 
     /* Constructor */
-    public Mural(int id, String date, int authorID, String address, int nimberOnMap, URL videoUrl, int year, String photographer, String videoAuthor, String author, double rating, String titleEN, String titleNL, String descEN, String authorDescEN, String descNL, String authorDescNL, String materialEN, String materialNL, String categoryEN, String categoryNL, String[] images) {
+    Mural(int id, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, double rating, String titleEN, String titleNL, String descEN, String authorDescEN, String descNL, String authorDescNL, String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
         this.id = id;
         this.date = date;
         this.authorID = authorID;
         this.address = address;
-        this.nimberOnMap = nimberOnMap;
+        this.numberOnMap = numberOnMap;
         this.videoUrl = videoUrl;
         this.year = year;
         this.photographer = photographer;
@@ -48,9 +49,9 @@ public class Mural {
         this.authorDescNL = authorDescNL;
         this.materialEN = materialEN;
         this.materialNL = materialNL;
-        CategoryEN = categoryEN;
-        CategoryNL = categoryNL;
-        this.images = images;
+        this.categoryEN = categoryEN;
+        this.categoryNL = categoryNL;
+        this.imageUrls = imageUrls;
     }
 
     /*
@@ -72,11 +73,11 @@ public class Mural {
         return address;
     }
 
-    public int getNimberOnMap() {
-        return nimberOnMap;
+    public int getNumberOnMap() {
+        return numberOnMap;
     }
 
-    public URL getVideoUrl() {
+    public String getVideoUrl() {
         return videoUrl;
     }
 
@@ -133,14 +134,14 @@ public class Mural {
     }
 
     public String getCategoryEN() {
-        return CategoryEN;
+        return categoryEN;
     }
 
     public String getCategoryNL() {
-        return CategoryNL;
+        return categoryNL;
     }
 
-    public String[] getImages() {
-        return images;
+    public List<String> getImageUrls() {
+        return imageUrls;
     }
 }
