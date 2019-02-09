@@ -19,8 +19,10 @@ import org.json.JSONException;
 public class DetailActivity extends AppCompatActivity {
 
     private ImageView mDetailImgMural;
+
     private TextView mDetailTitle;
-    private TextView mDetailMuralInfo;
+    private TextView mDetailMaterial;
+    private TextView mDetailAddress;
     private TextView mDetailPhotographer;
     private TextView mDetailMuralDescription;
     private String mMuralString;
@@ -31,7 +33,8 @@ public class DetailActivity extends AppCompatActivity {
 
         mDetailImgMural=findViewById(R.id.img_detail_author_image);
         mDetailTitle=findViewById(R.id.tv_title_detail);
-        mDetailMuralInfo=findViewById(R.id.tv_mural_info);
+        mDetailMaterial=findViewById(R.id.tv_material);
+        mDetailAddress=findViewById(R.id.tv_address);
         mDetailPhotographer=findViewById(R.id.tv_photographer);
         mDetailMuralDescription=findViewById(R.id.tv_mural_description);
 
@@ -56,8 +59,9 @@ public class DetailActivity extends AppCompatActivity {
 
         mDetailTitle.setText(m.getTitleEN());
         mDetailMuralDescription.setText(m.getDescEN());
-        mDetailPhotographer.setText(m.getPhotographer());
-        mDetailMuralInfo.setText("Material: "+m.getMaterialEN()+"\n\n"+"Address: "+m.getAddress()+" "+m.getNumberOnMap());
+        mDetailPhotographer.setText("Photographer: "+m.getPhotographer());
+        mDetailMaterial.setText("Material: "+m.getMaterialEN());
+        mDetailAddress.setText("Address: "+m.getAddress());
     }
 
 }
