@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class BlindWallsTask extends AsyncTask<String, Void, String[]> {
+public class BlindWallsTask extends AsyncTask<String, Void, List<Mural>> {
 
     private static final String TAG = BlindWallsTask.class.getSimpleName();
     private static final String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
@@ -33,41 +33,36 @@ public class BlindWallsTask extends AsyncTask<String, Void, String[]> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-//        mRecyclerView=new RecyclerView().findViewById(R.id.rv_main_rv);
     }
 
     @Override
-    protected String[] doInBackground(String... params) {
+    protected List<Mural> doInBackground(String... params) {
         Log.d(TAG, "doInBackground was called");
 
-        if(params.length==0){
-            return null;
-        }
-
-        String[] respons=null;
+        List<Mural> response=null;
         URL requestURL= NetworkUtils.buildUrl();
 
         try {
             String jsonResponse=NetworkUtils.getResponseFromHttpUrl(requestURL);
             Log.d(TAG, jsonResponse);
 
-            respons= BlindWallsJsonUtils.makeMuralFromApi(jsonResponse);
+            response= BlindWallsJsonUtils.makeMuralFromApi(jsonResponse);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return respons;
+        return response;
     }
 
     @Override
-    protected void onPostExecute(String[] s) {
+    protected void onPostExecute(List<Mural> murals) {
         Log.d(TAG,"onPostExecute() was called.");
-        Log.d(TAG,"Response: "+ Arrays.toString(s));
+        Log.d(TAG,"Response: "+ murals);
 
         WallsAdapter mWallsAdapter= MainActivity.getmWallsAdapter();
 
-        if(s!=null){
-            mWallsAdapter.setMuralData(s);
+        if(murals!=null){
+            mWallsAdapter.setMuralData(murals);
         }
 
     }

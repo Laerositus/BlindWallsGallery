@@ -3,7 +3,10 @@ package com.example.blindwallsgallery.utilities;
 import android.net.Uri;
 import android.util.Log;
 
+//import com.example.blindwallsgallery.BlindWallsTask;
+
 import com.example.blindwallsgallery.BlindWallsTask;
+import com.example.blindwallsgallery.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +26,7 @@ public class NetworkUtils {
     private static final String FORMAT_PARAM="mode";
 
     public static URL buildUrl() {
+        Log.e("DEBUG", "buildUrl was called");
         Uri builtUri = Uri.parse(mBlindWallsApi).buildUpon()
                 .appendQueryParameter(FORMAT_PARAM, format)
                 .build();
@@ -40,6 +44,7 @@ public class NetworkUtils {
     }
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
+        Log.e("DEBUG","getResponseFromHttpUrl was called");
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();

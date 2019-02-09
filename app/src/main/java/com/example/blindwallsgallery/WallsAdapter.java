@@ -11,18 +11,33 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapterViewHolder> {
 
+    private static final String TAG="DEBUG";
     private ItemClickListener mOnClickListener;
-    private String[] mMurals;
+    private List<Mural> mMurals;
+
+    class WallsAdapterViewHolder extends RecyclerView.ViewHolder{
+
+        private final TextView mListMurals;
+        private final ImageView mMuralImage;
+
+        WallsAdapterViewHolder(View itemView) {
+            super(itemView);
+            mListMurals = itemView.findViewById(R.id.tv_title);
+            mMuralImage=itemView.findViewById(R.id.img_author_image);
+        }
+    }
 
     @NonNull
     @Override
     public WallsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        Log.w(TAG, "onCreateViewHolder was called");
         Context context=viewGroup.getContext();
         int layoutIdForListItem=R.layout.list_murals;
         LayoutInflater inflater=LayoutInflater.from(context);
@@ -34,43 +49,24 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
 
     @Override
     public void onBindViewHolder(@NonNull WallsAdapterViewHolder wallsAdapterViewHolder, int i) {
-        String muralToPlace=mMurals[i];
-        wallsAdapterViewHolder.mListMurals.setText(muralToPlace);
+        Log.e(TAG,"onBindViewHolder was called");
+        Mural muralToPlace=mMurals.get(i);
+        wallsAdapterViewHolder.mListMurals.setText(muralToPlace.getTitleEN());
+        Uri firstImage=Uri.parse(muralToPlace.getImageUrls().get(0));
+        Log.w(TAG, "Uri: "+firstImage);
+
+        Picasso.get().load(firstImage).into(wallsAdapterViewHolder.mMuralImage);
     }
 
     @Override
     public int getItemCount() {
         if(mMurals==null) return 0;
-        return mMurals.length;
+        return mMurals.size();
     }
 
-    void setMuralData(String[] murals){
+    void setMuralData(List<Mural> murals){
         mMurals=murals;
         notifyDataSetChanged();
-    }
-
-    public class WallsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
-        private TextView mListMurals;
-
-        WallsAdapterViewHolder(View itemView) {
-            super(itemView);
-
-            mListMurals=itemView.findViewById(R.id.tv_title);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-//            int clickPos=getAdapterPosition();
-//            mOnClickListener.onItemClick(clickPos);
-
-            Log.d("TAG", "onClick was called");
-        }
-
-        public void bind(String text){
-            mListMurals.setText(text);
-        }
     }
 
     public interface ItemClickListener{
