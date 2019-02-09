@@ -103,8 +103,8 @@ public class BlindWallsJsonUtils {
             JSONArray images = mural.getJSONArray("images");
             List<String> imageUrls = new ArrayList<>();
             for (int i = 0; i < images.length(); i++) {
-                String tempUrl=images.getJSONObject(i).getString("url");
-                String url = "https://api.blindwalls.gallery/" + tempUrl.substring(0, tempUrl.length()-4)+".jpg";
+                String tempUrl=images.getJSONObject(i).getString("file");
+                String url = "https://api.blindwalls.gallery/" + tempUrl;
                 imageUrls.add(url);
             }
 

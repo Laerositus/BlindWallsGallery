@@ -56,6 +56,7 @@ public class Mural {
         this.imageUrls = imageUrls;
     }
 
+    /* Constructor*/
     public Mural(int id, String address, int numberOnMap, String photographer, String titleEN, String titleNL, String descEN,String descNL, String materialEN,String materialNL,List<String> imageUrls){
         this.id=id;
         this.address=address;
