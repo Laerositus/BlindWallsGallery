@@ -45,8 +45,9 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     public void onItemClick(int muralId) {
         Context context=this;
         Class destination=DetailActivity.class;
-        Intent parentIntent=new Intent(context,destination);
-        parentIntent.putExtra("Mural",muralId);
+        Intent detailIntent=new Intent(context,destination);
+        detailIntent.putExtra("Mural",muralId);
+        startActivity(detailIntent);
     }
 
     public void loadMuralData(){

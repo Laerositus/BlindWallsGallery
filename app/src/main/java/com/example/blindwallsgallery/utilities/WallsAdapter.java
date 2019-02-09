@@ -57,23 +57,11 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         Log.w(TAG, "onCreateViewHolder was called");
         Log.w(TAG, ""+i);
 
-        View view=null;
-        int layoutId;
-
-        switch (activity){
-            case "main":Context context=viewGroup.getContext();
-                layoutId=R.layout.list_murals;
-                LayoutInflater inflater=LayoutInflater.from(context);
-                boolean shouldAttachToParent=false;
-                view=inflater.inflate(layoutId,viewGroup,shouldAttachToParent);
-                break;
-            case "detail":
-
-                break;
-            case "photo":
-
-                break;
-        }
+        Context context=viewGroup.getContext();
+        int layoutId=R.layout.list_murals;
+        LayoutInflater inflater=LayoutInflater.from(context);
+        boolean shouldAttachToParent=false;
+        View view=inflater.inflate(layoutId,viewGroup,shouldAttachToParent);
         return new WallsAdapterViewHolder(view);
     }
 
