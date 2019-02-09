@@ -88,5 +88,6 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
 
     public interface ItemClickListener{
         void onItemClick(Mural mural);
+        void onItemClick(List<String> imageUrls);
     }
 }
