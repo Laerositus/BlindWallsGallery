@@ -14,6 +14,40 @@ import java.util.List;
 public class BlindWallsJsonUtils {
     private static final String TAG="DEBUG";
 
+    public static Mural makeMuralFromJson(String json) throws JSONException{
+        Mural mural;
+
+        Log.w(TAG, json);
+        JSONObject result=new JSONObject(json);
+
+        int id=result.getInt("id");
+        String address=result.getString("address");
+        int numberOnMap=result.getInt("numberOnMap");
+        String photographer=result.getString("photographer");
+
+        JSONObject title=result.getJSONObject("title");
+        String titleEN=title.getString("en");
+        String titleNL=title.getString("nl");
+
+        JSONObject description=result.getJSONObject("description");
+        String descEN=description.getString("en");
+        String descNL=description.getString("nl");
+
+        JSONObject material=result.getJSONObject("material");
+        String materialEN=material.getString("en");
+        String materialNL=material.getString("nl");
+
+        JSONArray images = result.getJSONArray("images");
+        List<String> imageUrls = new ArrayList<>();
+        for (int i = 0; i < images.length(); i++) {
+            String tempUrl=images.getJSONObject(i).getString("file");
+            String url = "https://api.blindwalls.gallery/" + tempUrl.substring(0, tempUrl.length()-4)+".jpg";
+            imageUrls.add(url);
+        }
+        mural=new Mural(id,address,numberOnMap,photographer,titleEN,titleNL,descEN,descNL,materialEN,materialNL,imageUrls);
+        return mural;
+    }
+
     public static List<Mural> makeMuralFromApi(String response)throws JSONException {
         Log.w(TAG,"makeMuralFromApi was called" );
 
@@ -65,6 +99,7 @@ public class BlindWallsJsonUtils {
             JSONObject category = mural.getJSONObject("category");
             String categoryEN = category.getString("en");
             String categoryNL = category.getString("nl");
+
             JSONArray images = mural.getJSONArray("images");
             List<String> imageUrls = new ArrayList<>();
             for (int i = 0; i < images.length(); i++) {
@@ -120,7 +155,7 @@ public class BlindWallsJsonUtils {
         String titleEN=mural.getTitleEN();
         String titleNL=mural.getTitleNL();
 
-        String title=",\"title\":{";
+        String title="\"title\":{";
         String titleEnS="\"en\":\""+titleEN+"\",";
         String titleNlS="\"nl\":\""+titleNL+"\"},";
 
@@ -131,7 +166,7 @@ public class BlindWallsJsonUtils {
         String materialNlS="\"nl\":\""+materialNL+"\"},";
 
         String address=mural.getAddress();
-        String addressS="\"address\": \""+address+"\",";
+        String addressS="\"address\":\""+address+"\",";
 
         int numberOnMap=mural.getNumberOnMap();
         String numberOnMapS="\"numberOnMap\":"+numberOnMap+",";
@@ -149,14 +184,14 @@ public class BlindWallsJsonUtils {
         List<String> imageUrls=mural.getImageUrls();
 
         String images="\"images\":[";
-        String muralJson=idS+addressS+numberOnMapS+photographerS+title+titleEnS+titleNlS+description+descEnS+descNlS+material+materialEnS+materialNlS+images;
+        String muralJson="{"+idS+addressS+numberOnMapS+photographerS+title+titleEnS+titleNlS+description+descEnS+descNlS+material+materialEnS+materialNlS+images;
 
         for(int i=0;i<imageUrls.size();i++) {
             String url=imageUrls.get(i);
             String file = "{\"file\":\""+url.substring(31,url.length())+"\"},";
             muralJson=muralJson+file;
         }
-        muralJson=muralJson.substring(0,muralJson.length()-1)+"]";
+        muralJson=muralJson.substring(0,muralJson.length()-1)+"]}";
 
         return muralJson;
     }

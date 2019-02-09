@@ -56,6 +56,20 @@ public class Mural {
         this.imageUrls = imageUrls;
     }
 
+    public Mural(int id, String address, int numberOnMap, String photographer, String titleEN, String titleNL, String descEN,String descNL, String materialEN,String materialNL,List<String> imageUrls){
+        this.id=id;
+        this.address=address;
+        this.numberOnMap=numberOnMap;
+        this.photographer=photographer;
+        this.titleEN=titleEN;
+        this.titleNL=titleNL;
+        this.descEN=descEN;
+        this.descNL=descNL;
+        this.materialEN=materialEN;
+        this.materialNL=materialNL;
+        this.imageUrls=imageUrls;
+    }
+
 
     @NonNull
     @Override
