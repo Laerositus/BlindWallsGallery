@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class DetailActivity extends AppCompatActivity {
 
     private ImageView mDetailImgMural;
@@ -14,7 +16,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mDetailMuralInfo;
     private TextView mDetailPhotographer;
     private TextView mDetailMuralDescription;
-    private int mMuralId;
+    private String mMuralString;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -29,10 +31,14 @@ public class DetailActivity extends AppCompatActivity {
         Intent parentIntent=getIntent();
 
         if(parentIntent!=null){
-            if(parentIntent.hasExtra("muralId")){
-                mMuralId=parentIntent.getIntExtra("muralId",0);
+            if(parentIntent.hasExtra("mural")){
+                mMuralString=parentIntent.getStringExtra("mural");
             }
         }
     }
+
+//    public setDetails(int muralId){
+//        Picasso.get().load().into(mDetailImgMural);
+//    }
 
 }

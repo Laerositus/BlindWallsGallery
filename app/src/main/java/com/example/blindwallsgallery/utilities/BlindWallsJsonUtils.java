@@ -104,12 +104,60 @@ public class BlindWallsJsonUtils {
 
 
 
-            Mural muralObject=new Mural(id,date,authorID,address,numberOnMap,videoUrl,year,photographer,videoAuthor,author,rating,titleEN,titleNL,descrEN,descrEN,descrNL,descrNL,materialEN,materialNL,categoryEN,categoryNL,imageUrls);
+            Mural muralObject=new Mural(id,date,authorID,address,numberOnMap,videoUrl,year,photographer,videoAuthor,author,rating,titleEN,titleNL,descrEN,descrNL,materialEN,materialNL,categoryEN,categoryNL,imageUrls);
             Log.d(TAG,mural.toString());
             murals.add(muralObject);
 
         }
 
         return murals;
+    }
+
+    public static String makeJsonFromMural(Mural mural){
+        int id=mural.getId();
+        String idS="\"id\":"+id+",";
+
+        String titleEN=mural.getTitleEN();
+        String titleNL=mural.getTitleNL();
+
+        String title=",\"title\":{";
+        String titleEnS="\"en\":\""+titleEN+"\",";
+        String titleNlS="\"nl\":\""+titleNL+"\"},";
+
+        String materialEN=mural.getMaterialEN();
+        String materialNL=mural.getMaterialNL();
+        String material="\"material\":{";
+        String materialEnS="\"en\":\""+materialEN+"\",";
+        String materialNlS="\"nl\":\""+materialNL+"\"},";
+
+        String address=mural.getAddress();
+        String addressS="\"address\": \""+address+"\",";
+
+        int numberOnMap=mural.getNumberOnMap();
+        String numberOnMapS="\"numberOnMap\":"+numberOnMap+",";
+
+        String photographer=mural.getPhotographer();
+        String photographerS="\"photographer\":\""+photographer+"\",";
+
+        String descEN=mural.getDescEN();
+        String descNL=mural.getDescNL();
+
+        String description="\"description\":{";
+        String descEnS="\"en\":\""+descEN+"\",";
+        String descNlS="\"nl\":\""+descNL+"\"},";
+
+        List<String> imageUrls=mural.getImageUrls();
+
+        String images="\"images\":[";
+        String muralJson=idS+addressS+numberOnMapS+photographerS+title+titleEnS+titleNlS+description+descEnS+descNlS+material+materialEnS+materialNlS+images;
+
+        for(int i=0;i<imageUrls.size();i++) {
+            String url=imageUrls.get(i);
+            String file = "{\"file\":\""+url.substring(31,url.length())+"\"},";
+            muralJson=muralJson+file;
+        }
+        muralJson=muralJson.substring(0,muralJson.length()-1)+"]";
+
+        return muralJson;
     }
 }

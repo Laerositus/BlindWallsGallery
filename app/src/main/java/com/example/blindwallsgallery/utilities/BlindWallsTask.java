@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.blindwallsgallery.MainActivity;
+import com.example.blindwallsgallery.WallsAdapter;
 import com.example.blindwallsgallery.data.Mural;
 
 import java.net.URL;

@@ -1,4 +1,4 @@
-package com.example.blindwallsgallery.utilities;
+package com.example.blindwallsgallery;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.blindwallsgallery.R;
 import com.example.blindwallsgallery.data.Mural;
 import com.squareup.picasso.Picasso;
 
@@ -47,7 +46,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         public void onClick(View v) {
             int adapterPos=getAdapterPosition();
             Mural muralToPlace=mMurals.get(adapterPos);
-            mOnClickListener.onItemClick(muralToPlace.getId());
+            mOnClickListener.onItemClick(muralToPlace);
         }
     }
 
@@ -74,8 +73,6 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
 
         Log.w(TAG, "Uri: "+firstImage+" at title "+muralToPlace.getTitleEN());
         Picasso.get().load(firstImage).into(wallsAdapterViewHolder.mMuralImage);
-
-
     }
 
     @Override
@@ -90,6 +87,6 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
     }
 
     public interface ItemClickListener{
-        void onItemClick(int muralId);
+        void onItemClick(Mural mural);
     }
 }
