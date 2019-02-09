@@ -1,5 +1,7 @@
 package com.example.blindwallsgallery;
 
+import android.support.annotation.NonNull;
+
 import java.net.URL;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class Mural {
     private String photographer;
     private String videoAuthor;
     private String author;
-    private double rating;
+    private String rating;
     private String titleEN;
     private String titleNL;
     private String descEN;
@@ -29,7 +31,7 @@ public class Mural {
     private List<String> imageUrls;
 
     /* Constructor */
-    Mural(int id, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, double rating, String titleEN, String titleNL, String descEN, String authorDescEN, String descNL, String authorDescNL, String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
+    public Mural(int id, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, String rating, String titleEN, String titleNL, String descEN, String authorDescEN, String descNL, String authorDescNL, String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
         this.id = id;
         this.date = date;
         this.authorID = authorID;
@@ -54,9 +56,39 @@ public class Mural {
         this.imageUrls = imageUrls;
     }
 
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Mural{" +
+                "id=" + id +
+                ", date='" + date + '\'' +
+                ", authorID=" + authorID +
+                ", address='" + address + '\'' +
+                ", numberOnMap=" + numberOnMap +
+                ", videoUrl='" + videoUrl + '\'' +
+                ", year=" + year +
+                ", photographer='" + photographer + '\'' +
+                ", videoAuthor='" + videoAuthor + '\'' +
+                ", author='" + author + '\'' +
+                ", rating=" + rating +
+                ", titleEN='" + titleEN + '\'' +
+                ", titleNL='" + titleNL + '\'' +
+                ", descEN='" + descEN + '\'' +
+                ", authorDescEN='" + authorDescEN + '\'' +
+                ", descNL='" + descNL + '\'' +
+                ", authorDescNL='" + authorDescNL + '\'' +
+                ", materialEN='" + materialEN + '\'' +
+                ", materialNL='" + materialNL + '\'' +
+                ", categoryEN='" + categoryEN + '\'' +
+                ", categoryNL='" + categoryNL + '\'' +
+                ", imageUrls=" + imageUrls +
+                '}';
+    }
+
     /*
-    Getters for all attributes
-     */
+        Getters for all attributes
+         */
     public int getId() {
         return id;
     }
@@ -97,13 +129,11 @@ public class Mural {
         return author;
     }
 
-    public double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public String getTitleEN() {
-        return titleEN;
-    }
+    public String getTitleEN() {return titleEN;}
 
     public String getTitleNL() {
         return titleNL;
