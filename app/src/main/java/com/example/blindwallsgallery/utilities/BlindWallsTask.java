@@ -31,6 +31,7 @@ public class BlindWallsTask extends AsyncTask<String, Void, List<Mural>> {
         try {
             String jsonResponse=NetworkUtils.getResponseFromHttpUrl(requestURL);
             Log.d(TAG, jsonResponse);
+            jsonResponse.replaceAll("\\\\\"\"|\"\\\\\"", "\"");
 
             response= BlindWallsJsonUtils.makeMuralFromApi(jsonResponse);
         } catch (Exception e) {
