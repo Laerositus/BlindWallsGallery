@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlindWallsJsonUtils {
-    private static final String TAG="DEBUG";
+    private static final String TAG= BlindWallsJsonUtils.class.getSimpleName();
 
     public static Mural makeMuralFromJson(String json) throws JSONException{
         Mural mural;
@@ -174,8 +174,8 @@ public class BlindWallsJsonUtils {
         String photographer=mural.getPhotographer();
         String photographerS="\"photographer\":\""+photographer+"\",";
 
-        String descEN=mural.getDescEN();
-        String descNL=mural.getDescNL();
+        String descEN=mural.getDescEN().replaceAll("\"", "");
+        String descNL=mural.getDescNL().replaceAll("\"", "");
 
         String description="\"description\":{";
         String descEnS="\"en\":\""+descEN+"\",";
