@@ -1,11 +1,14 @@
 package com.example.blindwallsgallery;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Network;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +19,10 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
-public class DetailActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DetailActivity extends AppCompatActivity{
 
     private ImageView mDetailImgMural;
 
@@ -26,6 +32,8 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mDetailPhotographer;
     private TextView mDetailMuralDescription;
     private String mMuralString;
+    private List<String> imageUrls;
+
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -46,11 +54,14 @@ public class DetailActivity extends AppCompatActivity {
                 try {
                     Mural m=BlindWallsJsonUtils.makeMuralFromJson(mMuralString);
                     insertDetails(m);
+                    imageUrls=m.getImageUrls();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
+
+        addListener();
     }
 
     public void insertDetails(Mural m){
@@ -64,4 +75,19 @@ public class DetailActivity extends AppCompatActivity {
         mDetailAddress.setText("Address: "+m.getAddress());
     }
 
+    public void addListener(){
+        View.OnClickListener listener=new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v){
+                Context context=v.getContext();
+                Class destination= PhotoActivity.class;
+                Intent photoIntent=new Intent(context,destination);
+                ArrayList<String> images=(ArrayList<String>) imageUrls;
+                photoIntent.putStringArrayListExtra("imageUrls", images);
+                startActivity(photoIntent);
+            }
+        };
+        mDetailImgMural.setOnClickListener(listener);
+    }
 }

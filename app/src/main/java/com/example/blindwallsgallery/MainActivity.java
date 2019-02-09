@@ -14,6 +14,8 @@ import com.example.blindwallsgallery.data.Mural;
 import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
 import com.example.blindwallsgallery.utilities.BlindWallsTask;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
 
     private static final String TAG="DEBUG";
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         detailIntent.putExtra("mural",muralString);
         startActivity(detailIntent);
     }
+
+    @Override
+    public void onItemClick(List<String> imageUrls) { }
 
     public void loadMuralData(){
         mRecyclerView.setVisibility(View.VISIBLE);
