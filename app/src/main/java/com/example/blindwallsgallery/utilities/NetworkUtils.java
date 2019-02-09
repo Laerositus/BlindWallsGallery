@@ -3,10 +3,6 @@ package com.example.blindwallsgallery.utilities;
 import android.net.Uri;
 import android.util.Log;
 
-//import com.example.blindwallsgallery.BlindWallsTask;
-
-import com.example.blindwallsgallery.BlindWallsTask;
-import com.example.blindwallsgallery.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;

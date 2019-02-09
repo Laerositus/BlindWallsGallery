@@ -1,4 +1,4 @@
-package com.example.blindwallsgallery;
+package com.example.blindwallsgallery.data;
 
 import android.support.annotation.NonNull;
 
@@ -21,9 +21,9 @@ public class Mural {
     private String titleEN;
     private String titleNL;
     private String descEN;
-    private String authorDescEN;
+//    private String authorDescEN;
     private String descNL;
-    private String authorDescNL;
+//    private String authorDescNL;
     private String materialEN;
     private String materialNL;
     private String categoryEN;
@@ -31,7 +31,7 @@ public class Mural {
     private List<String> imageUrls;
 
     /* Constructor */
-    public Mural(int id, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, String rating, String titleEN, String titleNL, String descEN, String authorDescEN, String descNL, String authorDescNL, String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
+    public Mural(int id, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, String rating, String titleEN, String titleNL, String descEN, /*String authorDescEN,*/ String descNL, /*String authorDescNL,*/ String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
         this.id = id;
         this.date = date;
         this.authorID = authorID;
@@ -46,9 +46,9 @@ public class Mural {
         this.titleEN = titleEN;
         this.titleNL = titleNL;
         this.descEN = descEN;
-        this.authorDescEN = authorDescEN;
+//        this.authorDescEN = authorDescEN;
         this.descNL = descNL;
-        this.authorDescNL = authorDescNL;
+//        this.authorDescNL = authorDescNL;
         this.materialEN = materialEN;
         this.materialNL = materialNL;
         this.categoryEN = categoryEN;
@@ -75,9 +75,9 @@ public class Mural {
                 ", titleEN='" + titleEN + '\'' +
                 ", titleNL='" + titleNL + '\'' +
                 ", descEN='" + descEN + '\'' +
-                ", authorDescEN='" + authorDescEN + '\'' +
+//                ", authorDescEN='" + authorDescEN + '\'' +
                 ", descNL='" + descNL + '\'' +
-                ", authorDescNL='" + authorDescNL + '\'' +
+//                ", authorDescNL='" + authorDescNL + '\'' +
                 ", materialEN='" + materialEN + '\'' +
                 ", materialNL='" + materialNL + '\'' +
                 ", categoryEN='" + categoryEN + '\'' +
@@ -143,17 +143,17 @@ public class Mural {
         return descEN;
     }
 
-    public String getAuthorDescEN() {
-        return authorDescEN;
-    }
+//    public String getAuthorDescEN() {
+//        return authorDescEN;
+//    }
 
     public String getDescNL() {
         return descNL;
     }
 
-    public String getAuthorDescNL() {
-        return authorDescNL;
-    }
+//    public String getAuthorDescNL() {
+//        return authorDescNL;
+//    }
 
     public String getMaterialEN() {
         return materialEN;
