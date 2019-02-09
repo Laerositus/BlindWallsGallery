@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".MuralInfoActivity"
+            android:name=".DetailActivity"
             android:parentActivityName=".MainActivity">
 
             <meta-data

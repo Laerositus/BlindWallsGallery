@@ -1,5 +1,7 @@
 package com.example.blindwallsgallery;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.example.blindwallsgallery.data.Mural;
+import com.example.blindwallsgallery.utilities.BlindWallsTask;
+import com.example.blindwallsgallery.utilities.WallsAdapter;
 
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
 
@@ -39,8 +42,11 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     @Override
-    public void onItemClick(Mural mMuralToPlace) {
-        mWallsAdapter=new WallsAdapter(this);
+    public void onItemClick(int muralId) {
+        Context context=this;
+        Class destination=DetailActivity.class;
+        Intent parentIntent=new Intent(context,destination);
+        parentIntent.putExtra("Mural",muralId);
     }
 
     public void loadMuralData(){

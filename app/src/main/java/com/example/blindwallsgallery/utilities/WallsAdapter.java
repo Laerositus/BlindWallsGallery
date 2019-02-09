@@ -1,4 +1,4 @@
-package com.example.blindwallsgallery;
+package com.example.blindwallsgallery.utilities;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+import com.example.blindwallsgallery.R;
 import com.example.blindwallsgallery.data.Mural;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +24,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
     private List<Mural> mMurals;
     private static String activity;
 
-    WallsAdapter(ItemClickListener mOnClickListener){
+    public WallsAdapter(ItemClickListener mOnClickListener){
         this.mOnClickListener=mOnClickListener;
     }
 
@@ -33,22 +33,12 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         private final TextView mListMurals;
         private final ImageView mMuralImage;
 
-        private final ImageView mDetailImgMural;
-        private final TextView mDetailTitle;
-        private final TextView mDetailMuralInfo;
-        private final TextView mDetailPhotographer;
-        private final TextView mDetailMuralDescription;
+
 
         WallsAdapterViewHolder(View itemView) {
             super(itemView);
             mListMurals = itemView.findViewById(R.id.tv_title);
             mMuralImage=itemView.findViewById(R.id.img_author_image);
-
-            mDetailImgMural=itemView.findViewById(R.id.img_detail_author_image);
-            mDetailTitle=itemView.findViewById(R.id.tv_title_detail);
-            mDetailMuralInfo=itemView.findViewById(R.id.tv_mural_info);
-            mDetailPhotographer=itemView.findViewById(R.id.tv_photographer);
-            mDetailMuralDescription=itemView.findViewById(R.id.tv_mural_description);
 
             itemView.setOnClickListener(this);
         }
@@ -57,7 +47,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         public void onClick(View v) {
             int adapterPos=getAdapterPosition();
             Mural muralToPlace=mMurals.get(adapterPos);
-            mOnClickListener.onItemClick(muralToPlace);
+            mOnClickListener.onItemClick(muralToPlace.getId());
         }
     }
 
@@ -106,12 +96,12 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         return mMurals.size();
     }
 
-    void setMuralData(List<Mural> murals){
+    public void setMuralData(List<Mural> murals){
         mMurals=murals;
         notifyDataSetChanged();
     }
 
     public interface ItemClickListener{
-        void onItemClick(Mural mMuralToPlace);
+        void onItemClick(int muralId);
     }
 }

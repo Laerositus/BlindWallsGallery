@@ -1,11 +1,10 @@
-package com.example.blindwallsgallery;
+package com.example.blindwallsgallery.utilities;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.blindwallsgallery.MainActivity;
 import com.example.blindwallsgallery.data.Mural;
-import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
-import com.example.blindwallsgallery.utilities.NetworkUtils;
 
 import java.net.URL;
 import java.util.List;
