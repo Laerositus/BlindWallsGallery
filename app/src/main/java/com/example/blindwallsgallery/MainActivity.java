@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mRecyclerView.setAdapter(mWallsAdapter);
 
         loadMuralData();
+
+        mRecyclerView.setItemViewCacheSize(25);
+        mRecyclerView.setDrawingCacheEnabled(true);
+        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
     }
 
     public void loadMuralData(){

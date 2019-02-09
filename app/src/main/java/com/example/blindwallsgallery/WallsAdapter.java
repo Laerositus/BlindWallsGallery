@@ -53,7 +53,8 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         Mural muralToPlace=mMurals.get(i);
         wallsAdapterViewHolder.mListMurals.setText(muralToPlace.getTitleEN());
         Uri firstImage=Uri.parse(muralToPlace.getImageUrls().get(0));
-        Log.w(TAG, "Uri: "+firstImage);
+
+        Log.w(TAG, "Uri: "+firstImage+" at title "+muralToPlace.getTitleEN());
 
         Picasso.get().load(firstImage).into(wallsAdapterViewHolder.mMuralImage);
     }
