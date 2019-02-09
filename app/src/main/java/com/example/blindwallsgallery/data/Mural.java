@@ -1,4 +1,4 @@
-package com.example.blindwallsgallery;
+package com.example.blindwallsgallery.data;
 
 import android.support.annotation.NonNull;
 

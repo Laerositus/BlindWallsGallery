@@ -1,23 +1,13 @@
 package com.example.blindwallsgallery;
 
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
-import com.example.blindwallsgallery.utilities.NetworkUtils;
-import com.squareup.picasso.Picasso;
-
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
+import com.example.blindwallsgallery.data.Mural;
 
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
 
@@ -38,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         LinearLayoutManager layoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mWallsAdapter=new WallsAdapter();
+        mWallsAdapter=new WallsAdapter(this);
         mRecyclerView.setAdapter(mWallsAdapter);
 
         loadMuralData();
@@ -48,73 +38,18 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
     }
 
+    @Override
+    public void onItemClick(Mural mMuralToPlace) {
+        mWallsAdapter=new WallsAdapter(this);
+    }
+
     public void loadMuralData(){
         mRecyclerView.setVisibility(View.VISIBLE);
         new BlindWallsTask().execute();
     }
 
-    @Override
-    public void onItemClick(int index) {}
-
-    @Override
-    public void setText(String text){}
-
-    @Override
-    public void setAmount(int amount){}
-
     public static WallsAdapter getmWallsAdapter() {
         return mWallsAdapter;
     }
-
-//    public class BlindWallsTask extends AsyncTask<String, Void, String[]> {
-//
-//
-//        private static final String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected List<Mural> doInBackground(String... params) {
-//            Log.e(TAG, "doInBackground was called");
-//
-//            Log.e(TAG, Arrays.toString(params));
-//
-////            if(params.length==0){
-////                return null;
-////            }
-//
-//            String[] respons=null;
-//            URL requestURL= NetworkUtils.buildUrl();
-//
-//            try {
-//                String jsonResponse=NetworkUtils.getResponseFromHttpUrl(requestURL);
-////                Log.d(TAG, jsonResponse);
-//
-//                respons= BlindWallsJsonUtils.makeMuralFromApi(jsonResponse);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            return respons;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<Mural> murals) {
-//            Log.w(TAG,"onPostExecute() was called.");
-////            Log.d(TAG,"Response: "+ Arrays.toString(s));
-//
-//            WallsAdapter mWallsAdapter= MainActivity.getmWallsAdapter();
-//
-//            if(murals!=null){
-//                mWallsAdapter.setMuralData(murals);
-//            }
-//
-//        }
-//
-//
-//    }
 
 }

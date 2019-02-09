@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.blindwallsgallery.data.Mural;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,18 +20,44 @@ import java.util.List;
 public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapterViewHolder> {
 
     private static final String TAG="DEBUG";
-    private ItemClickListener mOnClickListener;
+    private final ItemClickListener mOnClickListener;
     private List<Mural> mMurals;
+    private static String activity;
 
-    class WallsAdapterViewHolder extends RecyclerView.ViewHolder{
+    WallsAdapter(ItemClickListener mOnClickListener){
+        this.mOnClickListener=mOnClickListener;
+    }
+
+    class WallsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView mListMurals;
         private final ImageView mMuralImage;
+
+        private final ImageView mDetailImgMural;
+        private final TextView mDetailTitle;
+        private final TextView mDetailMuralInfo;
+        private final TextView mDetailPhotographer;
+        private final TextView mDetailMuralDescription;
 
         WallsAdapterViewHolder(View itemView) {
             super(itemView);
             mListMurals = itemView.findViewById(R.id.tv_title);
             mMuralImage=itemView.findViewById(R.id.img_author_image);
+
+            mDetailImgMural=itemView.findViewById(R.id.img_detail_author_image);
+            mDetailTitle=itemView.findViewById(R.id.tv_title_detail);
+            mDetailMuralInfo=itemView.findViewById(R.id.tv_mural_info);
+            mDetailPhotographer=itemView.findViewById(R.id.tv_photographer);
+            mDetailMuralDescription=itemView.findViewById(R.id.tv_mural_description);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPos=getAdapterPosition();
+            Mural muralToPlace=mMurals.get(adapterPos);
+            mOnClickListener.onItemClick(muralToPlace);
         }
     }
 
@@ -38,12 +65,25 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
     @Override
     public WallsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Log.w(TAG, "onCreateViewHolder was called");
-        Context context=viewGroup.getContext();
-        int layoutIdForListItem=R.layout.list_murals;
-        LayoutInflater inflater=LayoutInflater.from(context);
-        boolean shouldAttachToParent=false;
+        Log.w(TAG, ""+i);
 
-        View view=inflater.inflate(layoutIdForListItem,viewGroup,shouldAttachToParent);
+        View view=null;
+        int layoutId;
+
+        switch (activity){
+            case "main":Context context=viewGroup.getContext();
+                layoutId=R.layout.list_murals;
+                LayoutInflater inflater=LayoutInflater.from(context);
+                boolean shouldAttachToParent=false;
+                view=inflater.inflate(layoutId,viewGroup,shouldAttachToParent);
+                break;
+            case "detail":
+
+                break;
+            case "photo":
+
+                break;
+        }
         return new WallsAdapterViewHolder(view);
     }
 
@@ -55,8 +95,9 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         Uri firstImage=Uri.parse(muralToPlace.getImageUrls().get(0));
 
         Log.w(TAG, "Uri: "+firstImage+" at title "+muralToPlace.getTitleEN());
-
         Picasso.get().load(firstImage).into(wallsAdapterViewHolder.mMuralImage);
+
+
     }
 
     @Override
@@ -71,8 +112,6 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
     }
 
     public interface ItemClickListener{
-        void onItemClick(int index);
-        void setText(String text);
-        void setAmount(int amount);
+        void onItemClick(Mural mMuralToPlace);
     }
 }
