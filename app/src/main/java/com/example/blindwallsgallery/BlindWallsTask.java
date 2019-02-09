@@ -1,142 +1,76 @@
 package com.example.blindwallsgallery;
 
+import android.content.ClipData;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
+import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
+import com.example.blindwallsgallery.utilities.NetworkUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 
-public class BlindWallsTask extends AsyncTask<Void, Void, String> {
+public class BlindWallsTask extends AsyncTask<String, Void, String[]> {
 
-    final private String TAG = BlindWallsTask.class.getSimpleName();
-    final private String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
+    private static final String TAG = BlindWallsTask.class.getSimpleName();
+    private static final String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+//        mRecyclerView=new RecyclerView().findViewById(R.id.rv_main_rv);
     }
 
     @Override
-    protected String doInBackground(Void... voids) {
+    protected String[] doInBackground(String... params) {
         Log.d(TAG, "doInBackground was called");
 
-        String response = null;
+        if(params.length==0){
+            return null;
+        }
+
+        String[] respons=null;
+        URL requestURL= NetworkUtils.buildUrl();
 
         try {
-            URL mUrl = new URL(mBlindWallsApi);
-            URLConnection urlConnection = mUrl.openConnection();
-            HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
-            httpURLConnection.setRequestMethod("GET");
+            String jsonResponse=NetworkUtils.getResponseFromHttpUrl(requestURL);
+            Log.d(TAG, jsonResponse);
 
-            httpURLConnection.connect();
-            int responseCode = httpURLConnection.getResponseCode();
-            if (responseCode == 200) {
-
-                InputStream in = httpURLConnection.getInputStream();
-
-                Scanner scanner = new Scanner(in);
-                scanner.useDelimiter("\\A");
-
-                boolean hasInput = scanner.hasNext();
-                if (hasInput) {
-                    response = scanner.next();
-                }
-                Log.d(TAG, response);
-
-            }else {
-                Log.e(TAG, "Er was een fout: code = " + responseCode);
-            }
+            respons= BlindWallsJsonUtils.makeMuralFromApi(jsonResponse);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return response;
+
+        return respons;
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+    protected void onPostExecute(String[] s) {
         Log.d(TAG,"onPostExecute() was called.");
-        Log.d(TAG,"Response: "+s);
+        Log.d(TAG,"Response: "+ Arrays.toString(s));
 
-        try {
-            JSONObject jsonObject=new JSONObject(s);
-            JSONArray results=jsonObject.getJSONArray("");
-            List<Mural> murals=makeMuralFromApi(s);
-            for(int i=0;i<results.length();i++){
-                murals.get(i).getTitleEN();
-                WallsAdapter
-            }
+        WallsAdapter mWallsAdapter= MainActivity.getmWallsAdapter();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(s!=null){
+            mWallsAdapter.setMuralData(s);
         }
+
     }
 
-    public List<Mural> makeMuralFromApi(String response){
-        List<Mural> murals=new ArrayList<>();
-        try {
-            JSONObject jsonObject=new JSONObject(response);
-            JSONArray results=jsonObject.getJSONArray("");
 
-            for(int n=0;n<results.length();n++) {
-
-                JSONObject mural = results.getJSONObject(0);
-
-                int id = mural.getInt("id");
-                int authorID = mural.getInt("authorID");
-                int numberOnMap = mural.getInt("numberOnMap");
-                int year = mural.getInt("year");
-
-                double rating=mural.getDouble("rating");
-
-                String videoUrl=mural.getString("url");
-
-                String date = mural.getString("date");
-                String address = mural.getString("address");
-                String photographer = mural.getString("photographer");
-                String videoAuthor = mural.getString("videoAuthor");
-                String author = mural.getString("author");
-
-                JSONObject title = mural.getJSONObject("title");
-                String titleEN = title.getString("en");
-                String titleNL = title.getString("nl");
-
-                JSONObject description = mural.getJSONObject("description");
-                String descEN = description.getString("en");
-                String descNL = description.getString("nl");
-
-                JSONObject material = mural.getJSONObject("material");
-                String materialEN = material.getString("en");
-                String materialNL = material.getString("nl");
-
-                JSONObject category = mural.getJSONObject("category");
-                String categoryEN = category.getString("en");
-                String categoryNL = category.getString("nl");
-
-                JSONArray images = mural.getJSONArray("images");
-                List<String> imageUrls = new ArrayList<>();
-
-                for (int i = 0; i < images.length(); i++) {
-                    String url = "https://api.blindwalls.gallery/" + images.getJSONObject(i).getString("url");
-                    imageUrls.add(url);
-                }
-                murals.add(new Mural(id,date,authorID,address,numberOnMap,videoUrl,year,photographer,videoAuthor,author,rating,titleEN,titleNL,descEN,descEN,descNL,descNL,materialEN,materialNL,categoryEN,categoryNL,imageUrls));
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return murals;
-    }
 }

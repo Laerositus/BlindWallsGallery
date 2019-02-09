@@ -15,67 +15,67 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.AuthorViewHolder> {
+public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapterViewHolder> {
 
-    private static int viewHolderCount;
-    private int mNumberOfItems;
     private ItemClickListener mOnClickListener;
-    private ImageView mAuthorImage;
-    private BlindWallsTask blindWallsTask;
-
-
-    public WallsAdapter(int mNumberOfItems, ItemClickListener listener) {
-        this.mOnClickListener=listener;
-        this.mNumberOfItems = mNumberOfItems;
-        viewHolderCount=0;
-        blindWallsTask=new BlindWallsTask();
-    }
-
-    public interface ItemClickListener{
-        void onItemClick(int index);
-    }
+    private String[] mMurals;
 
     @NonNull
     @Override
-    public AuthorViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public WallsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context=viewGroup.getContext();
         int layoutIdForListItem=R.layout.list_murals;
         LayoutInflater inflater=LayoutInflater.from(context);
         boolean shouldAttachToParent=false;
 
         View view=inflater.inflate(layoutIdForListItem,viewGroup,shouldAttachToParent);
-        return new AuthorViewHolder(view);
+        return new WallsAdapterViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AuthorViewHolder authorViewHolder, int i) {
-        authorViewHolder.bind("Men");
+    public void onBindViewHolder(@NonNull WallsAdapterViewHolder wallsAdapterViewHolder, int i) {
+        String muralToPlace=mMurals[i];
+        wallsAdapterViewHolder.mListMurals.setText(muralToPlace);
     }
 
     @Override
-    public int getItemCount() {return mNumberOfItems;}
+    public int getItemCount() {
+        if(mMurals==null) return 0;
+        return mMurals.length;
+    }
 
-    public class AuthorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    void setMuralData(String[] murals){
+        mMurals=murals;
+        notifyDataSetChanged();
+    }
+
+    public class WallsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView mListMurals;
 
-        public AuthorViewHolder(View itemView) {
+        WallsAdapterViewHolder(View itemView) {
             super(itemView);
 
-            mListMurals=(TextView) itemView.findViewById(R.id.tv_title);
+            mListMurals=itemView.findViewById(R.id.tv_title);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            int clickPos=getAdapterPosition();
-            mOnClickListener.onItemClick(clickPos);
+//            int clickPos=getAdapterPosition();
+//            mOnClickListener.onItemClick(clickPos);
 
             Log.d("TAG", "onClick was called");
         }
 
         public void bind(String text){
-            mListMurals.setText();
+            mListMurals.setText(text);
         }
+    }
+
+    public interface ItemClickListener{
+        void onItemClick(int index);
+        void setText(String text);
+        void setAmount(int amount);
     }
 }
