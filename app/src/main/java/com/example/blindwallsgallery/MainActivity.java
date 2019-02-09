@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.blindwallsgallery.data.Mural;
+import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
 import com.example.blindwallsgallery.utilities.BlindWallsTask;
 
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     @Override
     public void onItemClick(Mural mural) {
-        String muralString=mural.toString();
+        String muralString= BlindWallsJsonUtils.makeJsonFromMural(mural);
         Context context=this;
         Class destination=DetailActivity.class;
         Intent detailIntent=new Intent(context,destination);
