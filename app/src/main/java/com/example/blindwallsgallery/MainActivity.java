@@ -2,8 +2,10 @@ package com.example.blindwallsgallery;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,6 +76,12 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
         toolbar=findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
+
+        setupSharedPreferences();
+    }
+
+    public void setupSharedPreferences(){
+        SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 
     }
 

@@ -21,8 +21,8 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        toolbar=findViewById(R.id.tb_settings);
-        setSupportActionBar(toolbar);
+//        toolbar=findViewById(R.id.tb_settings);
+//        setSupportActionBar(toolbar);
     }
 
     @Override

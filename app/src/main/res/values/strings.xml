@@ -4,4 +4,6 @@
     <string name="test">Hello world!</string>
     <string name="name_app">Blind Walls Gallery</string>
     <string name="settings">Settings</string>
+    <string name="setting_nl">Nederlands</string>
+    <string name="setting_en">English</string>
 </resources>
