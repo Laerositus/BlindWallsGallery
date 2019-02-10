@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    private static final String TAG = BlindWallsTask.class.getSimpleName();
+    private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private static final String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
 

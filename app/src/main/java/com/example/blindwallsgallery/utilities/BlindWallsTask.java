@@ -30,8 +30,7 @@ public class BlindWallsTask extends AsyncTask<String, Void, List<Mural>> {
 
         try {
             String jsonResponse=NetworkUtils.getResponseFromHttpUrl(requestURL);
-            Log.d(TAG, jsonResponse);
-            jsonResponse.replaceAll("\\\\\"\"|\"\\\\\"", "\"");
+            //Log.d(TAG, jsonResponse);
 
             response= BlindWallsJsonUtils.makeMuralFromApi(jsonResponse);
         } catch (Exception e) {
@@ -44,7 +43,7 @@ public class BlindWallsTask extends AsyncTask<String, Void, List<Mural>> {
     @Override
     protected void onPostExecute(List<Mural> murals) {
         Log.d(TAG,"onPostExecute() was called.");
-        Log.d(TAG,"Response: "+ murals);
+        //Log.d(TAG,"Response: "+ murals);
 
         WallsAdapter mWallsAdapter= MainActivity.getmWallsAdapter();
 

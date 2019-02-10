@@ -2,6 +2,7 @@ package com.example.blindwallsgallery;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,21 +19,26 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
 
-    private static final String TAG="DEBUG";
+    private static final String TAG=MainActivity.class.getSimpleName();
+
+    private final String KEY_RECYCLER_STATE = "recycler_state";
+    private static Bundle mBundleRecyclerViewState;
+
     private RecyclerView mRecyclerView;
+    private LinearLayoutManager layoutManager;
     private static WallsAdapter mWallsAdapter;
 
     private static final int temp_mNumOfItems=76;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e(TAG,"onCreate was called");
+        Log.d(TAG,"onCreate was called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mRecyclerView=findViewById(R.id.rv_main_rv);
 
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        layoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(layoutManager);
 
         mWallsAdapter=new WallsAdapter(this);
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
         loadMuralData();
 
-        mRecyclerView.setItemViewCacheSize(25);
+        mRecyclerView.setItemViewCacheSize(30);
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
     }
@@ -66,5 +72,29 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     public static WallsAdapter getmWallsAdapter() {
         return mWallsAdapter;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause was called");
+
+        // save RecyclerView state
+        mBundleRecyclerViewState = new Bundle();
+        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume was called");
+
+        // restore RecyclerView state
+        if (mBundleRecyclerViewState != null) {
+            Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
+    }
+
 
 }

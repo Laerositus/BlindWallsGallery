@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity{
+    private static final String TAG= DetailActivity.class.getSimpleName();
 
     private ImageView mDetailImgMural;
 
@@ -66,6 +68,7 @@ public class DetailActivity extends AppCompatActivity{
 
     public void insertDetails(Mural m){
         Uri firstImage=Uri.parse(m.getImageUrls().get(0));
+        Log.d(TAG, firstImage.toString());
         Picasso.get().load(firstImage).into(mDetailImgMural);
 
         mDetailTitle.setText(m.getTitleEN());
