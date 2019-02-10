@@ -16,8 +16,9 @@ public class BlindWallsJsonUtils {
 
     public static Mural makeMuralFromJson(String json) throws JSONException{
         Mural mural;
+        Log.d(TAG, "makeMuralFromJSON was called");
 
-        Log.w(TAG, json);
+        //Log.w(TAG, json);
         JSONObject result=new JSONObject(json);
 
         int id=result.getInt("id");
@@ -41,7 +42,7 @@ public class BlindWallsJsonUtils {
         List<String> imageUrls = new ArrayList<>();
         for (int i = 0; i < images.length(); i++) {
             String tempUrl=images.getJSONObject(i).getString("file");
-            String url = "https://api.blindwalls.gallery/" + tempUrl.substring(0, tempUrl.length()-4)+".jpg";
+            String url = "https://api.blindwalls.gallery/" + tempUrl;
             imageUrls.add(url);
         }
         mural=new Mural(id,address,numberOnMap,photographer,titleEN,titleNL,descEN,descNL,materialEN,materialNL,imageUrls);
@@ -49,7 +50,7 @@ public class BlindWallsJsonUtils {
     }
 
     public static List<Mural> makeMuralFromApi(String response)throws JSONException {
-        Log.w(TAG,"makeMuralFromApi was called" );
+        Log.d(TAG,"makeMuralFromApi was called");
 
 //        final int OWM_ID="id";
 //        final int OWM_
@@ -140,7 +141,7 @@ public class BlindWallsJsonUtils {
 
 
             Mural muralObject=new Mural(id,date,authorID,address,numberOnMap,videoUrl,year,photographer,videoAuthor,author,rating,titleEN,titleNL,descrEN,descrNL,materialEN,materialNL,categoryEN,categoryNL,imageUrls);
-            Log.d(TAG,mural.toString());
+            //Log.d(TAG,mural.toString());
             murals.add(muralObject);
 
         }
@@ -149,6 +150,7 @@ public class BlindWallsJsonUtils {
     }
 
     public static String makeJsonFromMural(Mural mural){
+        Log.d(TAG, "makeJsonFromMural was called");
         int id=mural.getId();
         String idS="\"id\":"+id+",";
 

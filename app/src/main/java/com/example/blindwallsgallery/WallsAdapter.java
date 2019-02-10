@@ -18,7 +18,7 @@ import java.util.List;
 
 public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapterViewHolder> {
 
-    private static final String TAG="DEBUG";
+    private static final String TAG=WallsAdapter.class.getSimpleName();
     private final ItemClickListener mOnClickListener;
     private List<Mural> mMurals;
     private static String activity;
@@ -53,8 +53,8 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
     @NonNull
     @Override
     public WallsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Log.w(TAG, "onCreateViewHolder was called");
-        Log.w(TAG, ""+i);
+        Log.d(TAG, "onCreateViewHolder was called");
+        Log.i(TAG, ""+i);
 
         Context context=viewGroup.getContext();
         int layoutId=R.layout.list_murals;
@@ -66,12 +66,12 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
 
     @Override
     public void onBindViewHolder(@NonNull WallsAdapterViewHolder wallsAdapterViewHolder, int i) {
-        Log.e(TAG,"onBindViewHolder was called");
+        Log.d(TAG,"onBindViewHolder was called");
         Mural muralToPlace=mMurals.get(i);
         wallsAdapterViewHolder.mListMurals.setText(muralToPlace.getTitleEN());
         Uri firstImage=Uri.parse(muralToPlace.getImageUrls().get(0));
 
-        Log.w(TAG, "Uri: "+firstImage+" at title "+muralToPlace.getTitleEN());
+        Log.i(TAG, "Uri: "+firstImage+" at title "+muralToPlace.getTitleEN());
         Picasso.get().load(firstImage).into(wallsAdapterViewHolder.mMuralImage);
     }
 
