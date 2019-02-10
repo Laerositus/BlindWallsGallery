@@ -54,6 +54,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosAdap
     @Override
     public void onBindViewHolder(@NonNull PhotosAdapterViewHolder photosAdapterViewHolder, int i) {
         Log.d(TAG,"onBindViewHolder was called");
+
         String photoToPlace=mPhotos.get(i);
         Uri firstImage=Uri.parse(photoToPlace);
 

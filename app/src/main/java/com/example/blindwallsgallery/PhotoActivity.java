@@ -20,7 +20,7 @@ import java.util.List;
 public class PhotoActivity extends AppCompatActivity {
 
     private LinearLayout mLinearLayout;
-    private List<String> imageUrls;
+    private ArrayList<String> imageUrls;
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
@@ -40,28 +40,25 @@ public class PhotoActivity extends AppCompatActivity {
         layoutManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        ArrayList<String> mPhotos = new ArrayList<>();
-        //TODO Implement a way for transferring this list from parent intent
-        mPhotos.add("https://api.blindwalls.gallery/static/1_1.jpg");
-        mPhotos.add("https://api.blindwalls.gallery/static/1_2.jpg");
-        mPhotos.add("https://api.blindwalls.gallery/static/1_3.jpg");
-        mPhotos.add("https://api.blindwalls.gallery/static/1_4.jpg");
-        mPhotosAdapter=new PhotosAdapter(mPhotos);
+        Intent parentIntent=getIntent();
+        Log.d(TAG, parentIntent.toString());
+
+
+
+        if(parentIntent!=null){
+            if(parentIntent.hasExtra("imageUrls")){
+                imageUrls=parentIntent.getStringArrayListExtra("imageUrls");
+                Log.d(TAG, imageUrls.toString());
+            }
+        }
+
+        mPhotosAdapter=new PhotosAdapter(imageUrls);
         mRecyclerView.setAdapter(mPhotosAdapter);
 
         mRecyclerView.setItemViewCacheSize(30);
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-        Intent parentIntent=getIntent();
-        Log.d(TAG, parentIntent.toString());
-
-        if(parentIntent!=null){
-            if(parentIntent.hasExtra("imageUrls")){
-                ArrayList<String> strings=parentIntent.getStringArrayListExtra("imageUrls");
-                Log.d(TAG, strings.toString());
-            }
-        }
     }
 
     public void insertPhotos(ArrayList<String> urls){
