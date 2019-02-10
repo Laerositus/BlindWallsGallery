@@ -26,8 +26,6 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity{
     private static final String TAG= DetailActivity.class.getSimpleName();
-    private String language = "en";
-
 
     private ImageView mDetailImgMural;
 
@@ -38,6 +36,7 @@ public class DetailActivity extends AppCompatActivity{
     private TextView mDetailMuralDescription;
     private String mMuralString;
     private List<String> imageUrls;
+    private String language;
 
 
     protected void onCreate(Bundle savedInstanceState){
@@ -54,6 +53,9 @@ public class DetailActivity extends AppCompatActivity{
         Intent parentIntent=getIntent();
 
         if(parentIntent!=null){
+            if(parentIntent.hasExtra("language")){
+                language=parentIntent.getStringExtra("language");
+            }
             if(parentIntent.hasExtra("mural")){
                 mMuralString=parentIntent.getStringExtra("mural");
                 try {
@@ -92,8 +94,6 @@ public class DetailActivity extends AppCompatActivity{
             mDetailAddress.setText("Address: "+m.getAddress());
         }
 
-    }
-
     public void addListener(){
         View.OnClickListener listener=new View.OnClickListener() {
 
@@ -109,5 +109,4 @@ public class DetailActivity extends AppCompatActivity{
         };
         mDetailImgMural.setOnClickListener(listener);
     }
-
 }

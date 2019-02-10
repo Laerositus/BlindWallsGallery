@@ -2,16 +2,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
+        android:key="language_setting"
         android:defaultValue="@string/setting_en"
         android:entries="@array/languages"
         android:entryValues="@array/languages_values"
+        android:title="Language"
+        android:selectable="true"
+        android:icon="@drawable/baseline_language_black_18dp"
         />
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="have_gey"
-        android:summaryOff="unintentional giey"
-        android:summaryOn="Yes yes very gey"
-        android:title="u Have gey?"/>
+    <!--<CheckBoxPreference-->
+        <!--android:defaultValue="true"-->
+        <!--android:key="have_gey"-->
+        <!--android:summaryOff="unintentional giey"-->
+        <!--android:summaryOn="Yes yes very gey"-->
+        <!--android:title="u Have gey?"/>-->
 
 </PreferenceScreen>

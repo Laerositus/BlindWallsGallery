@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     private LinearLayoutManager layoutManager;
     private static WallsAdapter mWallsAdapter;
     private Toolbar toolbar;
-    private String language = "en";
-
+    private String language;
 
     private static final int temp_mNumOfItems=76;
 
@@ -82,7 +81,17 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     public void setupSharedPreferences(){
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+        setLanguage(sharedPreferences.getString("language_setting", "en"));
+    }
 
+    public void setLanguage(String language){
+        if((!language.equals("en")||!language.equals("nl"))&&language!=null){
+            this.language=language;
+        }
+    }
+
+    public String getLanguage() {
+        return language;
     }
 
     @Override
@@ -92,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         Class destination=DetailActivity.class;
         Intent detailIntent=new Intent(context,destination);
         detailIntent.putExtra("mural",muralString);
+        detailIntent.putExtra("language",this.language);
         startActivity(detailIntent);
     }
 
@@ -147,6 +157,4 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
             Objects.requireNonNull(mRecyclerView.getLayoutManager()).onRestoreInstanceState(listState);
         }
     }
-
-
 }
