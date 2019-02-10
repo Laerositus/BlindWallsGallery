@@ -93,4 +93,5 @@ public class DetailActivity extends AppCompatActivity{
         };
         mDetailImgMural.setOnClickListener(listener);
     }
+
 }

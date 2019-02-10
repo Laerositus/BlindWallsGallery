@@ -74,4 +74,5 @@ public class PhotoActivity extends AppCompatActivity {
             Picasso.get().load(image).into(iv);
         }
     }
+
 }
