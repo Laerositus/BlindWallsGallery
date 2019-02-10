@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +26,7 @@ public class PhotoActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
     private static PhotosAdapter mPhotosAdapter;
+    private String language = "en";
 
     private String TAG = PhotoActivity.class.getSimpleName();
 
@@ -59,20 +61,20 @@ public class PhotoActivity extends AppCompatActivity {
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-    }
 
-    public void insertPhotos(ArrayList<String> urls){
-        Log.d(TAG, "insertPhotos was called");
-        for(int i=0;i<urls.size();i++) {
-            ImageView iv=new ImageView(this);
-            iv.setId(i);
-
-            iv.setPadding(2,2 ,2 ,2 );
-            iv.setScaleType(ImageView.ScaleType.FIT_XY);
-
-            Uri image= Uri.parse(urls.get(i));
-            Picasso.get().load(image).into(iv);
+        String toastStr = null;
+        if (language.equals("nl")) {
+            toastStr = "Foto's: " + imageUrls.size();
         }
+        else {
+            toastStr = "Foto's: " + imageUrls.size();
+        }
+
+        Toast toast = Toast.makeText(getApplicationContext(),
+                toastStr,
+                Toast.LENGTH_SHORT);
+        toast.show();
+
     }
 
 }

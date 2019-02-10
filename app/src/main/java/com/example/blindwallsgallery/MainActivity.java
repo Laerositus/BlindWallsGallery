@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.blindwallsgallery.data.Mural;
 import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
     private static WallsAdapter mWallsAdapter;
+    private String language = "en";
+
 
     private static final int temp_mNumOfItems=76;
 
@@ -45,6 +48,19 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mRecyclerView.setAdapter(mWallsAdapter);
 
         loadMuralData();
+
+        String toastStr = null;
+        if (language.equals("nl")) {
+            toastStr = "Murals opgehaald";
+        }
+        else {
+            toastStr = "Murals refreshed";
+        }
+
+        Toast toast = Toast.makeText(getApplicationContext(),
+                toastStr,
+                Toast.LENGTH_SHORT);
+        toast.show();
 
         mRecyclerView.setItemViewCacheSize(30);
         mRecyclerView.setDrawingCacheEnabled(true);

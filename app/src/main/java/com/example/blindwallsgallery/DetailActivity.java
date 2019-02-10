@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.blindwallsgallery.data.Mural;
 import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
@@ -25,6 +26,8 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity{
     private static final String TAG= DetailActivity.class.getSimpleName();
+    private String language = "en";
+
 
     private ImageView mDetailImgMural;
 
@@ -72,11 +75,23 @@ public class DetailActivity extends AppCompatActivity{
         Picasso.get().load(firstImage).into(mDetailImgMural);
         mDetailImgMural.setAdjustViewBounds(true);
 
-        mDetailTitle.setText(m.getTitleEN());
-        mDetailMuralDescription.setText(m.getDescEN());
-        mDetailPhotographer.setText("Photographer: "+m.getPhotographer());
-        mDetailMaterial.setText("Material: "+m.getMaterialEN());
-        mDetailAddress.setText("Address: "+m.getAddress());
+        if (language.equals("nl")) {
+            Log.d(TAG, "Language= " +language);
+            mDetailTitle.setText(m.getTitleNL());
+            mDetailMuralDescription.setText(m.getDescNL());
+            mDetailMaterial.setText("Materiaal: "+m.getMaterialNL());
+            mDetailPhotographer.setText("Fotograaf: "+m.getPhotographer());
+            mDetailAddress.setText("Adres: "+m.getAddress());
+        }
+
+        else {
+            mDetailTitle.setText(m.getTitleEN());
+            mDetailMuralDescription.setText(m.getDescEN());
+            mDetailMaterial.setText("Material: "+m.getMaterialEN());
+            mDetailPhotographer.setText("Photographer: "+m.getPhotographer());
+            mDetailAddress.setText("Address: "+m.getAddress());
+        }
+
     }
 
     public void addListener(){
