@@ -83,20 +83,12 @@ public class DetailActivity extends AppCompatActivity{
             mDetailAddress.setText("Adres: "+m.getAddress());
         }
 
-        else if (language.equals("en")) {
+        else {
             mDetailTitle.setText(m.getTitleEN());
             mDetailMuralDescription.setText(m.getDescEN());
             mDetailMaterial.setText("Material: "+m.getMaterialEN());
             mDetailPhotographer.setText("Photographer: "+m.getPhotographer());
             mDetailAddress.setText("Address: "+m.getAddress());
-        }
-
-        else {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "No support for language: " + language,
-                    Toast.LENGTH_SHORT);
-            toast.show();
-            finishAndRemoveTask();
         }
 
     }
