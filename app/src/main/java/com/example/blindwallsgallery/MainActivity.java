@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +21,7 @@ import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
 import com.example.blindwallsgallery.utilities.BlindWallsTask;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
 
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
     private static WallsAdapter mWallsAdapter;
+    private Toolbar toolbar;
     private String language = "en";
 
 
@@ -65,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mRecyclerView.setItemViewCacheSize(30);
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        toolbar=findViewById(R.id.tb_main);
+        setSupportActionBar(toolbar);
+
     }
 
     @Override
@@ -75,6 +85,24 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         Intent detailIntent=new Intent(context,destination);
         detailIntent.putExtra("mural",muralString);
         startActivity(detailIntent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.blindwalls_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        if(id==R.id.action_settings){
+            Intent startSettingsActivity=new Intent(this,SettingsActivity.class);
+            startActivity(startSettingsActivity);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -96,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
         // save RecyclerView state
         mBundleRecyclerViewState = new Bundle();
-        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        Parcelable listState = Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState();
         mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
     }
 
@@ -108,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         // restore RecyclerView state
         if (mBundleRecyclerViewState != null) {
             Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
-            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
+            Objects.requireNonNull(mRecyclerView.getLayoutManager()).onRestoreInstanceState(listState);
         }
     }
 
