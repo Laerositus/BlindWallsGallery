@@ -26,6 +26,8 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity{
     private static final String TAG= DetailActivity.class.getSimpleName();
+    private String language = "en";
+
 
     private ImageView mDetailImgMural;
 
@@ -68,7 +70,6 @@ public class DetailActivity extends AppCompatActivity{
     }
 
     public void insertDetails(Mural m){
-        String language = "en";
         Uri firstImage=Uri.parse(m.getImageUrls().get(0));
         Log.d(TAG, firstImage.toString());
         Picasso.get().load(firstImage).into(mDetailImgMural);

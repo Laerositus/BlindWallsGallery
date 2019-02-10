@@ -26,6 +26,7 @@ public class PhotoActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
     private static PhotosAdapter mPhotosAdapter;
+    private String language = "en";
 
     private String TAG = PhotoActivity.class.getSimpleName();
 
@@ -60,7 +61,7 @@ public class PhotoActivity extends AppCompatActivity {
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-        String language = "en";
+
         String toastStr = null;
         if (language.equals("nl")) {
             toastStr = "Foto's: " + imageUrls.size();
