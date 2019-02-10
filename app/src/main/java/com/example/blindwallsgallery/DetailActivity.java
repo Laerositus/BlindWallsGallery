@@ -70,6 +70,7 @@ public class DetailActivity extends AppCompatActivity{
         Uri firstImage=Uri.parse(m.getImageUrls().get(0));
         Log.d(TAG, firstImage.toString());
         Picasso.get().load(firstImage).into(mDetailImgMural);
+        mDetailImgMural.setAdjustViewBounds(true);
 
         mDetailTitle.setText(m.getTitleEN());
         mDetailMuralDescription.setText(m.getDescEN());
