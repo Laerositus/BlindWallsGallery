@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.blindwallsgallery.data.Mural;
 import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
@@ -67,16 +68,37 @@ public class DetailActivity extends AppCompatActivity{
     }
 
     public void insertDetails(Mural m){
+        String language = "en";
         Uri firstImage=Uri.parse(m.getImageUrls().get(0));
         Log.d(TAG, firstImage.toString());
         Picasso.get().load(firstImage).into(mDetailImgMural);
         mDetailImgMural.setAdjustViewBounds(true);
 
-        mDetailTitle.setText(m.getTitleEN());
-        mDetailMuralDescription.setText(m.getDescEN());
-        mDetailPhotographer.setText("Photographer: "+m.getPhotographer());
-        mDetailMaterial.setText("Material: "+m.getMaterialEN());
-        mDetailAddress.setText("Address: "+m.getAddress());
+        if (language.equals("nl")) {
+            Log.d(TAG, "Language= " +language);
+            mDetailTitle.setText(m.getTitleNL());
+            mDetailMuralDescription.setText(m.getDescNL());
+            mDetailMaterial.setText("Materiaal: "+m.getMaterialNL());
+            mDetailPhotographer.setText("Fotograaf: "+m.getPhotographer());
+            mDetailAddress.setText("Adres: "+m.getAddress());
+        }
+
+        else if (language.equals("en")) {
+            mDetailTitle.setText(m.getTitleEN());
+            mDetailMuralDescription.setText(m.getDescEN());
+            mDetailMaterial.setText("Material: "+m.getMaterialEN());
+            mDetailPhotographer.setText("Photographer: "+m.getPhotographer());
+            mDetailAddress.setText("Address: "+m.getAddress());
+        }
+
+        else {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "No support for language: " + language,
+                    Toast.LENGTH_SHORT);
+            toast.show();
+            finishAndRemoveTask();
+        }
+
     }
 
     public void addListener(){
