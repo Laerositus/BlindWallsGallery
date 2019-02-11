@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     private final String LIST_STATE_KEY = "list_state_key";
     private Parcelable savedRecyclerLayoutState;
-    private static Bundle mLayoutManager;
     private static List<Mural> muralList;
 
     private RecyclerView mRecyclerView;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG,"onCreate was called");
+        Log.d(TAG, "onCreate: called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
         if(savedInstanceState != null)
         {
-            Log.i(TAG, "onCreate: bundle found");
+            Log.i(TAG, "onCreate: Bundle found");
             savedRecyclerLayoutState = savedInstanceState.getParcelable(LIST_STATE_KEY);
             Objects.requireNonNull(mRecyclerView.getLayoutManager()).onRestoreInstanceState(savedRecyclerLayoutState);
             Log.i(TAG, "onCreate: Murals retrieved from cache");
@@ -92,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * Method to show the toast.
      */
     public void showLoadingToast() {
+        Log.d(TAG, "showLoadingToast: called");
         String toastStr = null;
         if (language.equals("nl")) {
             toastStr = "Murals opgehaald";
@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * @return String
      */
     public static String getApi() {
+        Log.d(TAG, "getApi: called");
         return api;
     }
 
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * Method so setup the shared preferences and set the settings to the rest of the application
      */
     public void setupSharedPreferences(){
+        Log.d(TAG, "setupSharedPreferences: called");
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
         setApi(sharedPreferences.getString("api","https://api.blindwalls.gallery/apiv2/murals" ));
     }
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * Retrieves update from sharedPreferences
      */
     public void updateLanguage() {
+        Log.d(TAG, "updateLanguage: called");
         setLanguage(sharedPreferences.getString("language_setting", "en"));
     }
 
@@ -133,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * @param api String
      */
     public void setApi(String api){
+        Log.d(TAG, "setApi: called");
         if(api!=null){
             MainActivity.api =api;
         }
@@ -143,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * @param language String
      */
     public void setLanguage(String language){
+        Log.d(TAG, "setLanguage: called");
         if((language.equals("en")||language.equals("nl"))){
             MainActivity.language=language;
             Log.i(TAG, "setLanguage: Language= "+MainActivity.language);
@@ -155,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * @param cacheMurals List<Mural>
      */
     public static void setCache(List<Mural> cacheMurals) {
+        Log.d(TAG, "setCache: called");
         muralList = cacheMurals;
         Log.i(TAG, "setCache: "+muralList.size()+" murals cached");
     }
@@ -164,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * @return String
      */
     public static String getLanguage() {
+        Log.d(TAG, "getLanguage: called");
         return language;
     }
 
@@ -175,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      */
     @Override
     public void onItemClick(Mural mural) {
+        Log.d(TAG, "onItemClick: called");
         setupSharedPreferences();
         String muralString= BlindWallsJsonUtils.makeJsonFromMural(mural);
         Context context=this;
@@ -192,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "onCreateOptionsMenu: called");
         super.onCreateOptionsMenu(menu);
 
         MenuInflater inflater = getMenuInflater();
@@ -220,9 +229,14 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         }
     }
 
+    /**
+     * Called when optionsMenu is opened
+     * @param menu Menu
+     * @return true
+     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
-        Log.i(TAG, "onPrepareOptionsMenu: called");
+        Log.d(TAG, "onPrepareOptionsMenu: called");
         setMenuLanguage(menu);
         return true;
     }
@@ -235,6 +249,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: called");
         int id=item.getItemId();
         if(id==R.id.action_settings){
             Intent startSettingsActivity=new Intent(this,SettingsActivity.class);
@@ -254,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * Method to load the Muraldata into the main view
      */
     public void loadMuralData(){
+        Log.d(TAG, "loadMuralData: called");
         mRecyclerView.setVisibility(View.VISIBLE);
         new BlindWallsTask().execute();
     }
@@ -263,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * Gets the data from the cached Murals
      */
     public void loadCachedMuralData() {
+        Log.d(TAG, "loadCachedMuralData: called");
         mRecyclerView.setVisibility(View.VISIBLE);
         mWallsAdapter.setMuralData(muralList);
     }
@@ -272,6 +289,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * @return Wallsadapter
      */
     public static WallsAdapter getmWallsAdapter() {
+        Log.d(TAG, "getmWallsAdapter: called");
         return mWallsAdapter;
     }
 
@@ -286,6 +304,9 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         outState.putParcelable(LIST_STATE_KEY, Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState());
     }
 
+    /**
+     * Called when lifecycle reaches onResume. Updates language.
+     */
     @Override
     public void onResume() {
         Log.d(TAG, "onResume: called");

@@ -17,14 +17,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * Adapter class for the recyleView of the main screen
+ * Adapter class for the recylerView of the main screen
  */
 public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapterViewHolder> {
 
     private static final String TAG=WallsAdapter.class.getSimpleName();
     private final ItemClickListener mOnClickListener;
     private List<Mural> mMurals;
-    private static String activity;
 
     /**
      * Constructor for the adapter
@@ -60,6 +59,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
          */
         @Override
         public void onClick(View v) {
+            Log.d(TAG, "onClick: called");
             int adapterPos=getAdapterPosition();
             Mural muralToPlace=mMurals.get(adapterPos);
             mOnClickListener.onItemClick(muralToPlace);
@@ -75,7 +75,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
     @NonNull
     @Override
     public WallsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-
+        Log.d(TAG, "onCreateViewHolder: called");
         Context context=viewGroup.getContext();
         int layoutId=R.layout.list_murals;
         LayoutInflater inflater=LayoutInflater.from(context);
@@ -91,7 +91,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
      */
     @Override
     public void onBindViewHolder(@NonNull WallsAdapterViewHolder wallsAdapterViewHolder, int i) {
-        Log.d(TAG,"onBindViewHolder was called");
+        Log.d(TAG, "onBindViewHolder: called");
         Mural muralToPlace=mMurals.get(i);
         wallsAdapterViewHolder.mListMurals.setText(muralToPlace.getTitleEN());
         Uri firstImage=Uri.parse(muralToPlace.getImageUrls().get(0));
@@ -106,6 +106,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
      */
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount: called");
         if(mMurals==null) return 0;
         return mMurals.size();
     }
@@ -115,6 +116,7 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
      * @param murals List
      */
     public void setMuralData(List<Mural> murals){
+        Log.i(TAG, "setMuralData: called");
         mMurals=murals;
         notifyDataSetChanged();
     }

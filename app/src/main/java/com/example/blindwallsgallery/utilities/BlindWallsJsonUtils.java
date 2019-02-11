@@ -25,7 +25,7 @@ public class BlindWallsJsonUtils {
      */
     public static Mural makeMuralFromJson(String json) throws JSONException{
         Mural mural;
-        Log.d(TAG, "makeMuralFromJSON was called");
+        Log.d(TAG, "makeMuralFromJson: called");
 
         //Log.w(TAG, json);
         JSONObject result=new JSONObject(json);
@@ -67,7 +67,7 @@ public class BlindWallsJsonUtils {
      * @throws JSONException Exception
      */
     static List<Mural> makeMuralFromApi(String response)throws JSONException {
-        Log.d(TAG,"makeMuralFromApi was called");
+        Log.d(TAG, "makeMuralFromApi: called");
 
         List<Mural>murals=new ArrayList<>();
 
@@ -126,7 +126,7 @@ public class BlindWallsJsonUtils {
      * @return String of JSON formatted Mural
      */
     public static String makeJsonFromMural(Mural mural){
-        Log.d(TAG, "makeJsonFromMural was called");
+        Log.d(TAG, "makeJsonFromMural: called");
         int id=mural.getId();
         String idS="\"id\":"+id+",";
 

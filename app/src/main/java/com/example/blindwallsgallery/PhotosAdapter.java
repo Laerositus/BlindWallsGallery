@@ -57,8 +57,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosAdap
     @NonNull
     @Override
     public PhotosAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Log.d(TAG, "onCreateViewHolder was called");
-        Log.i(TAG, ""+i);
+        Log.d(TAG, "onCreateViewHolder: called");
 
         Context context=viewGroup.getContext();
         int layoutId=R.layout.activity_photo_view_cell;
@@ -75,7 +74,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosAdap
      */
     @Override
     public void onBindViewHolder(@NonNull PhotosAdapterViewHolder photosAdapterViewHolder, int i) {
-        Log.d(TAG,"onBindViewHolder was called");
+        Log.d(TAG, "onBindViewHolder: calleds");
 
         String photoToPlace=mPhotos.get(i);
         Uri firstImage=Uri.parse(photoToPlace);
@@ -90,6 +89,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosAdap
      */
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount: called");
         if(mPhotos==null) return 0;
         return mPhotos.size();
     }

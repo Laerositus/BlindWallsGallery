@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+/**
+ * Class for the settings screen
+ */
 public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
-    private Toolbar toolbar;
-
+    /**
+     * Creates the activity
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,11 @@ public class SettingsActivity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
     }
 
+    /**
+     *Provides selected item
+     * @param item Menu item
+     * @return selected item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, "onOptionsItemSelected: called");

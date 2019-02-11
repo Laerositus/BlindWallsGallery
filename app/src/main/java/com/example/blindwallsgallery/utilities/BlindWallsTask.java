@@ -16,13 +16,13 @@ import java.util.List;
 public class BlindWallsTask extends AsyncTask<String, Void, List<Mural>> {
 
     private static final String TAG = BlindWallsTask.class.getSimpleName();
-    private static final String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
 
     /**
      * What to do at start.
      */
     @Override
     protected void onPreExecute() {
+        Log.d(TAG, "onPreExecute: called");
         super.onPreExecute();
     }
 
@@ -33,7 +33,7 @@ public class BlindWallsTask extends AsyncTask<String, Void, List<Mural>> {
      */
     @Override
     protected List<Mural> doInBackground(String... params) {
-        Log.d(TAG, "doInBackground was called");
+        Log.d(TAG, "doInBackground: called");
 
         List<Mural> response=null;
         URL requestURL= NetworkUtils.buildUrl();
@@ -56,7 +56,7 @@ public class BlindWallsTask extends AsyncTask<String, Void, List<Mural>> {
      */
     @Override
     protected void onPostExecute(List<Mural> murals) {
-        Log.d(TAG,"onPostExecute() was called.");
+        Log.d(TAG, "onPostExecute: called");
 
         WallsAdapter mWallsAdapter= MainActivity.getmWallsAdapter();
 

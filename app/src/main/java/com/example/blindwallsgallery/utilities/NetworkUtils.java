@@ -29,7 +29,7 @@ class NetworkUtils {
      * @return URL
      */
     static URL buildUrl() {
-        Log.e("DEBUG", "buildUrl was called");
+        Log.d(TAG, "buildUrl: called");
 
         mBlindWallsApi=MainActivity.getApi();
 
@@ -44,7 +44,7 @@ class NetworkUtils {
             e.printStackTrace();
         }
 
-        Log.v(TAG, "Built URI " + url);
+        Log.i(TAG, "Built URI: " + url);
 
         return url;
     }
@@ -56,7 +56,7 @@ class NetworkUtils {
      * @throws IOException Exception
      */
     static String getResponseFromHttpUrl(URL url) throws IOException {
-        Log.e("DEBUG","getResponseFromHttpUrl was called");
+        Log.d(TAG, "getResponseFromHttpUrl: called");
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestMethod("GET");
         urlConnection.setRequestProperty("Content-Type","application/json");

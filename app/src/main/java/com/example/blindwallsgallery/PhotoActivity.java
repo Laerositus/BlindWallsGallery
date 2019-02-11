@@ -29,7 +29,7 @@ public class PhotoActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
     private static PhotosAdapter mPhotosAdapter;
-    private String TAG = PhotoActivity.class.getSimpleName();
+    private static final String TAG = PhotoActivity.class.getSimpleName();
 
     /**
      * main method to create the screen
@@ -38,7 +38,7 @@ public class PhotoActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate was called");
+        Log.d(TAG, "onCreate: called");
 
         setContentView(R.layout.activity_photo_view);
 
@@ -64,6 +64,7 @@ public class PhotoActivity extends AppCompatActivity {
      * @param parentIntent Intent
      */
     public void getIntentExtras(Intent parentIntent){
+        Log.d(TAG, "getIntentExtras: called");
         if(parentIntent!=null){
             if(parentIntent.hasExtra("imageUrls")){
                 imageUrls=parentIntent.getStringArrayListExtra("imageUrls");
@@ -76,6 +77,7 @@ public class PhotoActivity extends AppCompatActivity {
      * Shows the toast that displays the amount of photo's available
      */
     public void showPhotoToast(){
+        Log.d(TAG, "showPhotoToast: called");
         String language=MainActivity.getLanguage();
 
         String toastStr;

@@ -3,6 +3,7 @@ package com.example.blindwallsgallery;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,6 +18,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final String TAG=MapsActivity.class.getSimpleName();
+
     private GoogleMap mMap;
 
     private String author;
@@ -30,6 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: called");
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -65,8 +69,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMapReady: called");
         mMap = googleMap;
-
         // Add a marker on coords and move the camera
         LatLng coords = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(coords).title(author));

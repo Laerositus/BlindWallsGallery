@@ -116,6 +116,7 @@ public class DetailActivity extends AppCompatActivity {
      * Listener for the view of the image to go to the PhotoActivity with an arrayList of the URLs to display
      */
     public void addListener() {
+        Log.d(TAG, "addListener: called");
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
