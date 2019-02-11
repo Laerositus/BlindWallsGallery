@@ -9,34 +9,51 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.blindwallsgallery.data.Mural;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter for the PhotoViewing class
+ */
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosAdapterViewHolder> {
 
     private static final String TAG= PhotosAdapter.class.getSimpleName();
     private List<String> mPhotos;
-    private static String activity;
 
+    /**
+     * Constructor to create a PhotosAdapter Object
+     * @param mPhotos ArrayList
+     */
     PhotosAdapter(ArrayList<String> mPhotos) {
         this.mPhotos = mPhotos;
     }
 
+    /**
+     * Class for the viewHolder for the Adapter
+     */
     class PhotosAdapterViewHolder extends RecyclerView.ViewHolder{
 
         private final ImageView mPhotoImage;
 
+        /**
+         * Constructor for the viewHolder
+         * @param itemView View
+         */
         PhotosAdapterViewHolder(View itemView) {
             super(itemView);
             mPhotoImage=itemView.findViewById(R.id.img_photo_image);
         }
     }
 
+    /**
+     *
+     * @param viewGroup viewGroup
+     * @param i int of the index
+     * @return PhotosAdapterViewHolder
+     */
     @NonNull
     @Override
     public PhotosAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -51,6 +68,11 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosAdap
         return new PhotosAdapterViewHolder(view);
     }
 
+    /**
+     * Binds the viewHolder with the images
+     * @param photosAdapterViewHolder photosAdapterViewHolder
+     * @param i index
+     */
     @Override
     public void onBindViewHolder(@NonNull PhotosAdapterViewHolder photosAdapterViewHolder, int i) {
         Log.d(TAG,"onBindViewHolder was called");
@@ -62,6 +84,10 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosAdap
         Picasso.get().load(firstImage).into(photosAdapterViewHolder.mPhotoImage);
     }
 
+    /**
+     * Returns the amount of items in the view
+     * @return Integer
+     */
     @Override
     public int getItemCount() {
         if(mPhotos==null) return 0;
