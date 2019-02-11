@@ -75,8 +75,6 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
     @NonNull
     @Override
     public WallsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Log.d(TAG, "onCreateViewHolder was called");
-        Log.i(TAG, ""+i);
 
         Context context=viewGroup.getContext();
         int layoutId=R.layout.list_murals;

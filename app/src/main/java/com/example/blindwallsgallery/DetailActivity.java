@@ -41,6 +41,7 @@ public class DetailActivity extends AppCompatActivity {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: called");
         setContentView(R.layout.activity_detail);
 
         mDetailImgMural = findViewById(R.id.img_detail_author_image);
@@ -61,6 +62,7 @@ public class DetailActivity extends AppCompatActivity {
      * @param parentIntent Intent
      */
     public void getIntentExtra(Intent parentIntent){
+        Log.d(TAG, "getIntentExtra: called");
         if (parentIntent != null) {
             //Checks if there is an extra called "language"
             if (parentIntent.hasExtra("language")) {
@@ -86,13 +88,11 @@ public class DetailActivity extends AppCompatActivity {
      * @param m Mural
      */
     public void insertDetails(Mural m){
-        Log.d(TAG, "insertDetails was called");
+        Log.d(TAG, "insertDetails: called");
         Uri firstImage=Uri.parse(m.getImageUrls().get(0));
-        Log.i(TAG, firstImage.toString());
 
         Picasso.get().load(firstImage).into(mDetailImgMural);
         mDetailImgMural.setAdjustViewBounds(true);
-        Log.d(TAG, "Language= " +language);
 
         //Checks what language should be used
         if (language.equals("nl")) {
@@ -135,7 +135,8 @@ public class DetailActivity extends AppCompatActivity {
      * @param v View
      */
     public void onClickOpenMapButton(View v) {
-        Log.i(TAG, "showMap: coords(LatLng): " + m.getLatitude() + ", " + m.getLongitude());
+        Log.d(TAG, "onClickOpenMapButton: called");
+        Log.i(TAG, "onClickOpenMapButton: coords(LatLng): " + m.getLatitude() + ", " + m.getLongitude());
         Context context=this;
         Class destination=MapsActivity.class;
         Intent detailIntent=new Intent(context,destination);

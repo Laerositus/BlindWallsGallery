@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     private static String language="en";
     private static String api;
 
+    SharedPreferences sharedPreferences;
 
     /**
      * Standard method to create the main view.
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mRecyclerView.setLayoutManager(layoutManager);
 
         setupSharedPreferences();
+        updateLanguage();
 
         mWallsAdapter=new WallsAdapter(this);
         mRecyclerView.setAdapter(mWallsAdapter);
@@ -115,8 +117,14 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * Method so setup the shared preferences and set the settings to the rest of the application
      */
     public void setupSharedPreferences(){
-        SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
         setApi(sharedPreferences.getString("api","https://api.blindwalls.gallery/apiv2/murals" ));
+    }
+
+    /**
+     * Retrieves update from sharedPreferences
+     */
+    public void updateLanguage() {
         setLanguage(sharedPreferences.getString("language_setting", "en"));
     }
 
@@ -137,8 +145,10 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     public void setLanguage(String language){
         if((language.equals("en")||language.equals("nl"))){
             MainActivity.language=language;
+            Log.i(TAG, "setLanguage: Language= "+MainActivity.language);
         }
     }
+
 
     /**
      * Caches the murals to be saved locally so turning the phone or losing connection while using the app doesn't crash it.
@@ -182,9 +192,15 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.blindwalls_menu,menu);
-        setMenuLanguage(menu);
+        if (menu!=null){
+            Log.i(TAG, "onCreateOptionsMenu: there is a menu");
+            //setMenuLanguage(this.menu);
+        }
+
         return true;
     }
 
@@ -193,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
      * @param menu Menu
      */
     public void setMenuLanguage(Menu menu){
+        Log.d(TAG, "setMenuLanguage: called");
         if(language.equals("en")){
             menu.getItem(0).setTitle(R.string.settings_string_en);
             menu.getItem(1).setTitle(R.string.donate);
@@ -201,6 +218,13 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
             menu.getItem(0).setTitle(R.string.settings_string_nl);
             menu.getItem(1).setTitle(R.string.donate_nl);
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        Log.i(TAG, "onPrepareOptionsMenu: called");
+        setMenuLanguage(menu);
+        return true;
     }
 
     /**
@@ -234,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         new BlindWallsTask().execute();
     }
 
+
     /**
      * Gets the data from the cached Murals
      */
@@ -259,6 +284,13 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState: called");
         outState.putParcelable(LIST_STATE_KEY, Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState());
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume: called");
+        super.onResume();
+        updateLanguage();
     }
 
 }
