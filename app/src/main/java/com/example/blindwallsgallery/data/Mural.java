@@ -2,9 +2,11 @@ package com.example.blindwallsgallery.data;
 
 import android.support.annotation.NonNull;
 
-import java.net.URL;
 import java.util.List;
 
+/**
+ * Object for a mural to be created
+ */
 public class Mural {
 
     private int id;
@@ -23,17 +25,15 @@ public class Mural {
     private String titleEN;
     private String titleNL;
     private String descEN;
-//    private String authorDescEN;
     private String descNL;
-//    private String authorDescNL;
     private String materialEN;
     private String materialNL;
     private String categoryEN;
     private String categoryNL;
     private List<String> imageUrls;
 
-    /* Constructor */
-    public Mural(int id, double latitude, double longitude, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, String rating, String titleEN, String titleNL, String descEN, /*String authorDescEN,*/ String descNL, /*String authorDescNL,*/ String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
+    /* Main Constructor for full object*/
+    public Mural(int id, double latitude, double longitude, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, String rating, String titleEN, String titleNL, String descEN, String descNL, String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
         this.id = id;
         this.latitude=latitude;
         this.longitude=longitude;
@@ -50,9 +50,7 @@ public class Mural {
         this.titleEN = titleEN;
         this.titleNL = titleNL;
         this.descEN = descEN;
-//        this.authorDescEN = authorDescEN;
         this.descNL = descNL;
-//        this.authorDescNL = authorDescNL;
         this.materialEN = materialEN;
         this.materialNL = materialNL;
         this.categoryEN = categoryEN;
@@ -60,7 +58,7 @@ public class Mural {
         this.imageUrls = imageUrls;
     }
 
-    /* Constructor*/
+    /* Secondary constructor for the detailed view to decrease the information needed for the item*/
     public Mural(int id, double latitude, double longitude, String address, int numberOnMap, String photographer, String titleEN, String titleNL, String descEN,String descNL, String materialEN,String materialNL,List<String> imageUrls){
         this.id=id;
         this.latitude=latitude;
@@ -78,6 +76,10 @@ public class Mural {
     }
 
 
+    /**
+     * Basic toString method
+     * @return String
+     */
     @NonNull
     @Override
     public String toString() {
@@ -164,17 +166,9 @@ public class Mural {
         return descEN;
     }
 
-//    public String getAuthorDescEN() {
-//        return authorDescEN;
-//    }
-
     public String getDescNL() {
         return descNL;
     }
-
-//    public String getAuthorDescNL() {
-//        return authorDescNL;
-//    }
 
     public String getMaterialEN() {
         return materialEN;

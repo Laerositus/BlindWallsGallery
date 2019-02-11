@@ -1,33 +1,34 @@
 package com.example.blindwallsgallery.utilities;
 
-import android.net.Uri;
-import android.util.JsonReader;
 import android.util.Log;
-
-
+import android.net.Uri;
 import com.example.blindwallsgallery.MainActivity;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
 
-public class NetworkUtils {
+/**
+ * Class to handle the networking
+ */
+class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
+    //Default API to use
     private static String mBlindWallsApi="https://api.blindwalls.gallery/apiv2/murals";
-
     private static final String format="json";
-
     private static final String FORMAT_PARAM="mode";
 
-    public static URL buildUrl() {
+    /**
+     * Build the URL for the HTTP request
+     * @return URL
+     */
+    static URL buildUrl() {
         Log.e("DEBUG", "buildUrl was called");
 
         mBlindWallsApi=MainActivity.getApi();
@@ -48,14 +49,20 @@ public class NetworkUtils {
         return url;
     }
 
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
+    /**
+     * Gets the response from the HTTP request
+     * @param url URL from buildUrl
+     * @return String of JSON of Murals
+     * @throws IOException Exception
+     */
+    static String getResponseFromHttpUrl(URL url) throws IOException {
         Log.e("DEBUG","getResponseFromHttpUrl was called");
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestMethod("GET");
         urlConnection.setRequestProperty("Content-Type","application/json");
         try {
             InputStream in = urlConnection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 
             StringBuilder result = new StringBuilder();
             String line;
@@ -64,18 +71,6 @@ public class NetworkUtils {
             }
             return result.toString();
 
-//            Scanner scanner = new Scanner(in);
-//            scanner.useDelimiter("\\A");
-//
-//            boolean hasInput = scanner.hasNext();
-//            if (hasInput) {
-//                String json = scanner.next();
-//                Log.d(TAG, json);
-//                //json = json.replaceAll("\"\"", "\"");
-//                return json;
-//            } else {
-//                return null;
-//            }
         } finally {
             urlConnection.disconnect();
         }

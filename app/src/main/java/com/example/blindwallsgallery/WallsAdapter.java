@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/**
+ * Adapter class for the recyleView of the main screen
+ */
 public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapterViewHolder> {
 
     private static final String TAG=WallsAdapter.class.getSimpleName();
@@ -23,17 +26,26 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
     private List<Mural> mMurals;
     private static String activity;
 
-    public WallsAdapter(ItemClickListener mOnClickListener){
+    /**
+     * Constructor for the adapter
+     * @param mOnClickListener ItemClickListener
+     */
+    WallsAdapter(ItemClickListener mOnClickListener){
         this.mOnClickListener=mOnClickListener;
     }
 
+    /**
+     * Class for the viewHolder for the adapter
+     */
     class WallsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView mListMurals;
         private final ImageView mMuralImage;
 
-
-
+        /**
+         * Constructor for the viewholder
+         * @param itemView itemView
+         */
         WallsAdapterViewHolder(View itemView) {
             super(itemView);
             mListMurals = itemView.findViewById(R.id.tv_title);
@@ -42,6 +54,10 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Overridden method for the OnClickListener
+         * @param v View
+         */
         @Override
         public void onClick(View v) {
             int adapterPos=getAdapterPosition();
@@ -50,6 +66,12 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         }
     }
 
+    /**
+     * Method for creating the viewHolder
+     * @param viewGroup Viewgroup
+     * @param i index
+     * @return WallsAdapterViewHolder
+     */
     @NonNull
     @Override
     public WallsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -64,6 +86,11 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         return new WallsAdapterViewHolder(view);
     }
 
+    /**
+     * Binds the viewholder to the RecyclerView
+     * @param wallsAdapterViewHolder WallsAdapterViewHolder
+     * @param i index
+     */
     @Override
     public void onBindViewHolder(@NonNull WallsAdapterViewHolder wallsAdapterViewHolder, int i) {
         Log.d(TAG,"onBindViewHolder was called");
@@ -75,17 +102,28 @@ public class WallsAdapter extends RecyclerView.Adapter<WallsAdapter.WallsAdapter
         Picasso.get().load(firstImage).into(wallsAdapterViewHolder.mMuralImage);
     }
 
+    /**
+     * Returns the amount of items of the view
+     * @return Int
+     */
     @Override
     public int getItemCount() {
         if(mMurals==null) return 0;
         return mMurals.size();
     }
 
+    /**
+     * Sets the data of the mural
+     * @param murals List
+     */
     public void setMuralData(List<Mural> murals){
         mMurals=murals;
         notifyDataSetChanged();
     }
 
+    /**
+     * Interface for a custom listener
+     */
     public interface ItemClickListener{
         void onItemClick(Mural mural);
     }

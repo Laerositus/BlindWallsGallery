@@ -139,7 +139,11 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
             MainActivity.language=language;
         }
     }
-  
+
+    /**
+     * Caches the murals to be saved locally so turning the phone or losing connection while using the app doesn't crash it.
+     * @param cacheMurals List<Mural>
+     */
     public static void setCache(List<Mural> cacheMurals) {
         muralList = cacheMurals;
         Log.i(TAG, "setCache: "+muralList.size()+" murals cached");
@@ -229,7 +233,10 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mRecyclerView.setVisibility(View.VISIBLE);
         new BlindWallsTask().execute();
     }
-    
+
+    /**
+     * Gets the data from the cached Murals
+     */
     public void loadCachedMuralData() {
         mRecyclerView.setVisibility(View.VISIBLE);
         mWallsAdapter.setMuralData(muralList);
@@ -243,6 +250,10 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         return mWallsAdapter;
     }
 
+    /**
+     * Saves the state of the Activity
+     * @param outState Bundle
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
