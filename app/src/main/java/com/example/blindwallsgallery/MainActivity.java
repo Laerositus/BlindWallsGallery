@@ -32,15 +32,13 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     private final String KEY_RECYCLER_STATE = "recycler_state";
     private static Bundle mBundleRecyclerViewState;
-
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager layoutManager;
+    private static RecyclerView mRecyclerView;
+    private static LinearLayoutManager layoutManager;
     private static WallsAdapter mWallsAdapter;
-    private Toolbar toolbar;
+    private static Toolbar toolbar;
     private static String language="en";
     private static String api;
 
-    private static final int temp_mNumOfItems=76;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     public void setLanguage(String language){
-        if((!language.equals("en")||!language.equals("nl"))/*&&language!=null*/){
+        if((language.equals("en")||language.equals("nl"))){
             MainActivity.language=language;
         }
     }
