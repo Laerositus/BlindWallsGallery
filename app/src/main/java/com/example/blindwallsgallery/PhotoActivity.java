@@ -18,6 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class PhotoActivity extends AppCompatActivity {
 
     private LinearLayout mLinearLayout;
@@ -26,10 +29,12 @@ public class PhotoActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
     private static PhotosAdapter mPhotosAdapter;
-    private String language = "en";
-
     private String TAG = PhotoActivity.class.getSimpleName();
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,24 +48,35 @@ public class PhotoActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         Intent parentIntent=getIntent();
-        Log.d(TAG, parentIntent.toString());
+        getIntentExtras(parentIntent);
 
+        mPhotosAdapter=new PhotosAdapter(imageUrls);
+        mRecyclerView.setAdapter(mPhotosAdapter);
+        mRecyclerView.setItemViewCacheSize(30);
+        mRecyclerView.setDrawingCacheEnabled(true);
+        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
+        showPhotoToast();
+    }
 
+    /**
+     *
+     * @param parentIntent
+     */
+    public void getIntentExtras(Intent parentIntent){
         if(parentIntent!=null){
             if(parentIntent.hasExtra("imageUrls")){
                 imageUrls=parentIntent.getStringArrayListExtra("imageUrls");
                 Log.d(TAG, imageUrls.toString());
             }
         }
+    }
 
-        mPhotosAdapter=new PhotosAdapter(imageUrls);
-        mRecyclerView.setAdapter(mPhotosAdapter);
-
-        mRecyclerView.setItemViewCacheSize(30);
-        mRecyclerView.setDrawingCacheEnabled(true);
-        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
+    /**
+     *
+     */
+    public void showPhotoToast(){
+        String language=MainActivity.getLanguage();
 
         String toastStr = null;
         if (language.equals("nl")) {
@@ -74,7 +90,6 @@ public class PhotoActivity extends AppCompatActivity {
                 toastStr,
                 Toast.LENGTH_SHORT);
         toast.show();
-
     }
 
 }

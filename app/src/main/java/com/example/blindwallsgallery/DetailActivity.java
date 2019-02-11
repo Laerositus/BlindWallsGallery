@@ -24,6 +24,9 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class DetailActivity extends AppCompatActivity {
     private static final String TAG = DetailActivity.class.getSimpleName();
 
@@ -40,6 +43,10 @@ public class DetailActivity extends AppCompatActivity {
     private String language;
 
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
@@ -71,6 +78,10 @@ public class DetailActivity extends AppCompatActivity {
         addListener();
     }
 
+    /**
+     *
+     * @param m
+     */
     public void insertDetails(Mural m){
         Log.d(TAG, "insertDetails was called");
         Uri firstImage=Uri.parse(m.getImageUrls().get(0));
@@ -97,6 +108,9 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     */
     public void addListener() {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -112,6 +126,10 @@ public class DetailActivity extends AppCompatActivity {
         mDetailImgMural.setOnClickListener(listener);
     }
 
+    /**
+     *
+     * @param v
+     */
     public void onClickOpenMapButton(View v) {
         Log.i(TAG, "showMap: coords(LatLng): " + m.getLatitude() + ", " + m.getLongitude());
         Context context=this;

@@ -26,7 +26,9 @@ import com.example.blindwallsgallery.utilities.BlindWallsTask;
 import java.util.List;
 import java.util.Objects;
 
+
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
+
 
     private static final String TAG=MainActivity.class.getSimpleName();
 
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     private static final int temp_mNumOfItems=76;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG,"onCreate was called");
@@ -69,12 +75,14 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         setSupportActionBar(toolbar);
     }
 
-    public void showLoadingToast(){
-        String toastStr=null;
+    /**
+     *
+     */
+    public void showLoadingToast() {
+        String toastStr = null;
         if (language.equals("nl")) {
             toastStr = "Murals opgehaald";
-        }
-        else if(language.equals("en")){
+        } else if (language.equals("en")) {
             toastStr = "Murals refreshed";
         }
 
@@ -82,46 +90,57 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
                 toastStr,
                 Toast.LENGTH_SHORT);
         toast.show();
-
-        mRecyclerView.setItemViewCacheSize(30);
-        mRecyclerView.setDrawingCacheEnabled(true);
-        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-        toolbar=findViewById(R.id.tb_main);
-        setSupportActionBar(toolbar);
-
-        Objects.requireNonNull(this.getSupportActionBar()).setDisplayShowCustomEnabled(true);
-        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
     }
 
+    /**
+     * Returns the api used in sharedPreferences to be used in the application.
+     * @returns String
+     */
     public static String getApi() {
         return api;
     }
 
+    /**
+     *
+     */
     public void setupSharedPreferences(){
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
         setApi(sharedPreferences.getString("api","https://api.blindwalls.gallery/apiv2/murals" ));
         setLanguage(sharedPreferences.getString("language_setting", "en"));
     }
 
+    /**
+     *
+     * @param api
+     */
     public void setApi(String api){
         if(api!=null){
             MainActivity.api =api;
         }
     }
 
+    /**
+     *
+     * @param language
+     */
     public void setLanguage(String language){
         if((!language.equals("en")||!language.equals("nl"))/*&&language!=null*/){
             MainActivity.language=language;
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getLanguage() {
         return language;
     }
 
+    /**
+     *
+     * @param mural
+     */
     @Override
     public void onItemClick(Mural mural) {
         setupSharedPreferences();
@@ -134,6 +153,11 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         startActivity(detailIntent);
     }
 
+    /**
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -141,6 +165,11 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         return true;
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
@@ -156,18 +185,32 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     *
+     * @param imageUrls
+     */
     @Override
     public void onItemClick(List<String> imageUrls) { }
 
+    /**
+     *
+     */
     public void loadMuralData(){
         mRecyclerView.setVisibility(View.VISIBLE);
         new BlindWallsTask().execute();
     }
 
+    /**
+     *
+     * @return
+     */
     public static WallsAdapter getmWallsAdapter() {
         return mWallsAdapter;
     }
 
+    /**
+     *
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -179,6 +222,9 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
     }
 
+    /**
+     *
+     */
     @Override
     protected void onResume() {
         super.onResume();
