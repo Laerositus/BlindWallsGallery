@@ -11,11 +11,11 @@
         android:icon="@drawable/baseline_language_black_18dp"
         />
 
-    <!--<CheckBoxPreference-->
-        <!--android:defaultValue="true"-->
-        <!--android:key="have_gey"-->
-        <!--android:summaryOff="unintentional giey"-->
-        <!--android:summaryOn="Yes yes very gey"-->
-        <!--android:title="u Have gey?"/>-->
+    <EditTextPreference
+        android:key="api"
+        android:defaultValue="@string/api"
+        android:title="API"
+        android:icon="@mipmap/ic_launcher_round"/>
+
 
 </PreferenceScreen>

@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     private LinearLayoutManager layoutManager;
     private static WallsAdapter mWallsAdapter;
     private Toolbar toolbar;
-    private String language;
+    private static String language;
+    private static String api;
 
     private static final int temp_mNumOfItems=76;
 
@@ -58,11 +59,11 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
         setupSharedPreferences();
 
-        String toastStr;
+        String toastStr=null;
         if (language.equals("nl")) {
             toastStr = "Murals opgehaald";
         }
-        else {
+        else if(language.equals("en")){
             toastStr = "Murals refreshed";
         }
 
@@ -77,13 +78,22 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
         toolbar=findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
+    }
 
-
+    public static String getApi() {
+        return api;
     }
 
     public void setupSharedPreferences(){
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+        setApi(sharedPreferences.getString("api","https://api.blindwalls.gallery/apiv2/murals" ));
         setLanguage(sharedPreferences.getString("language_setting", "en"));
+    }
+
+    public void setApi(String api){
+        if(api!=null){
+            this.api=api;
+        }
     }
 
     public void setLanguage(String language){
@@ -92,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         }
     }
 
-    public String getLanguage() {
+    public static String getLanguage() {
         return language;
     }
 

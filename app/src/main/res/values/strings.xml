@@ -6,4 +6,5 @@
     <string name="settings">Settings</string>
     <string name="setting_nl">Nederlands</string>
     <string name="setting_en">English</string>
+    <string name="api">https://api.blindwalls.gallery/apiv2/murals</string>
 </resources>

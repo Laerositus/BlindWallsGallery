@@ -6,14 +6,4 @@
     tools:context=".SettingsActivity"
     android:id="@+id/fragment_settings"
     android:name= "com.example.blindwallsgallery.SettingsFragment">
-
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/tb_settings"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--tools:layout_editor_absoluteX="0dp">-->
-
-    <!--</android.support.v7.widget.Toolbar>-->
-
 </fragment>
