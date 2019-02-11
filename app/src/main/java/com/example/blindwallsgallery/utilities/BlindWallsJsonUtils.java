@@ -117,32 +117,6 @@ public class BlindWallsJsonUtils {
             String descrEN = description.getString("en");
             String descrNL = description.getString("nl");
 
-//            Scanner sc=new Scanner(descrEN);
-//
-//            sc.useDelimiter("\\n \\n");
-//
-//            String descMural=sc.next();
-//            sc.useDelimiter("}");
-//            String descAuthor=sc.next();
-//
-//            String descMuralEN=descMural;
-//            String descAuthorEN=descAuthor;
-//
-//            sc.close();
-//            sc=new Scanner(descrNL);
-//
-//            sc.useDelimiter("\\n \\n");
-//
-//            descMural=sc.next();
-//            sc.useDelimiter("\"}");
-//            descAuthor=sc.next();
-//
-//            String descMuralNL=descMural;
-//            String descAuthorNL=descAuthor;
-//
-//            sc.close();
-
-
 
             Mural muralObject=new Mural(id,latitude,longitude,date,authorID,address,numberOnMap,videoUrl,year,photographer,videoAuthor,author,rating,titleEN,titleNL,descrEN,descrNL,materialEN,materialNL,categoryEN,categoryNL,imageUrls);
             //Log.d(TAG,mural.toString());
