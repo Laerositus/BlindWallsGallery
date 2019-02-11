@@ -49,6 +49,7 @@ public class BlindWallsTask extends AsyncTask<String, Void, List<Mural>> {
 
         if(murals!=null){
             mWallsAdapter.setMuralData(murals);
+            MainActivity.setCache(murals);
         }
 
     }

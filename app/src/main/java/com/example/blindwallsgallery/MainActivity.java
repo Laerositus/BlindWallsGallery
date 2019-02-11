@@ -29,11 +29,12 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final String TAG=MainActivity.class.getSimpleName();
-
-    private final String KEY_RECYCLER_STATE = "recycler_state";
-    private static Bundle mBundleRecyclerViewState;
+    private final String LIST_STATE_KEY = "list_state_key";
+    private Parcelable savedRecyclerLayoutState;
+    private static Bundle mLayoutManager;
+    private static List<Mural> muralList;
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     private Toolbar toolbar;
     private static String language="en";
     private static String api;
+
 
     /**
      * Standard method to create the main view.
@@ -62,15 +64,27 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mWallsAdapter=new WallsAdapter(this);
         mRecyclerView.setAdapter(mWallsAdapter);
 
-        loadMuralData();
-        showLoadingToast();
-
         mRecyclerView.setItemViewCacheSize(30);
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         toolbar=findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
+
+
+        if(savedInstanceState != null)
+        {
+            Log.i(TAG, "onCreate: bundle found");
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(LIST_STATE_KEY);
+            Objects.requireNonNull(mRecyclerView.getLayoutManager()).onRestoreInstanceState(savedRecyclerLayoutState);
+            Log.i(TAG, "onCreate: Murals retrieved from cache");
+            loadCachedMuralData();
+        }
+        else {
+            Log.i(TAG, "onCreate: Murals refreshed");
+            loadMuralData();
+            showLoadingToast();
+        }
     }
 
     /**
@@ -125,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         if((language.equals("en")||language.equals("nl"))){
             MainActivity.language=language;
         }
+    }
+  
+    public static void setCache(List<Mural> cacheMurals) {
+        muralList = cacheMurals;
+        Log.i(TAG, "setCache: "+muralList.size()+" murals cached");
     }
 
     /**
@@ -212,11 +231,28 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         new BlindWallsTask().execute();
     }
 
-    /**
+    public static WallsAdapter getmWallsAdapter() {
+        return mWallsAdapter;
+    }
+
+    public void loadCachedMuralData() {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mWallsAdapter.setMuralData(muralList);
+    }
+
+  /**
      * Method to get the used Wallsadapter
      * @return Wallsadapter
      */
     public static WallsAdapter getmWallsAdapter() {
         return mWallsAdapter;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: called");
+        outState.putParcelable(LIST_STATE_KEY, Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState());
+    }
+
 }
