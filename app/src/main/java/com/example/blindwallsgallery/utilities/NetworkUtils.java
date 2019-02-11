@@ -5,6 +5,8 @@ import android.util.JsonReader;
 import android.util.Log;
 
 
+import com.example.blindwallsgallery.MainActivity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +21,7 @@ public class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    private static final String mBlindWallsApi = "https://api.blindwalls.gallery/apiv2/murals";
+    private static String mBlindWallsApi;
 
     private static final String format="json";
 
@@ -27,6 +29,9 @@ public class NetworkUtils {
 
     public static URL buildUrl() {
         Log.e("DEBUG", "buildUrl was called");
+
+        mBlindWallsApi=MainActivity.getApi();
+
         Uri builtUri = Uri.parse(mBlindWallsApi).buildUpon()
                 .appendQueryParameter(FORMAT_PARAM, format)
                 .build();

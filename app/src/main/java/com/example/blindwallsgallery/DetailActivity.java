@@ -24,10 +24,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailActivity extends AppCompatActivity{
-    private static final String TAG= DetailActivity.class.getSimpleName();
-    private String language = "en";
-
+public class DetailActivity extends AppCompatActivity {
+    private static final String TAG = DetailActivity.class.getSimpleName();
 
     private ImageView mDetailImgMural;
 
@@ -38,71 +36,70 @@ public class DetailActivity extends AppCompatActivity{
     private TextView mDetailMuralDescription;
     private String mMuralString;
     private List<String> imageUrls;
+    private String language;
 
 
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mDetailImgMural=findViewById(R.id.img_detail_author_image);
-        mDetailTitle=findViewById(R.id.tv_title_detail);
-        mDetailMaterial=findViewById(R.id.tv_material);
-        mDetailAddress=findViewById(R.id.tv_address);
-        mDetailPhotographer=findViewById(R.id.tv_photographer);
-        mDetailMuralDescription=findViewById(R.id.tv_mural_description);
+        mDetailImgMural = findViewById(R.id.img_detail_author_image);
+        mDetailTitle = findViewById(R.id.tv_title_detail);
+        mDetailMaterial = findViewById(R.id.tv_material);
+        mDetailAddress = findViewById(R.id.tv_address);
+        mDetailPhotographer = findViewById(R.id.tv_photographer);
+        mDetailMuralDescription = findViewById(R.id.tv_mural_description);
 
-        Intent parentIntent=getIntent();
+        Intent parentIntent = getIntent();
 
-        if(parentIntent!=null){
-            if(parentIntent.hasExtra("mural")){
-                mMuralString=parentIntent.getStringExtra("mural");
+        if (parentIntent != null) {
+            if (parentIntent.hasExtra("language")) {
+                language = parentIntent.getStringExtra("language");
+            }
+            if (parentIntent.hasExtra("mural")) {
+                mMuralString = parentIntent.getStringExtra("mural");
                 try {
-                    Mural m=BlindWallsJsonUtils.makeMuralFromJson(mMuralString);
+                    Mural m = BlindWallsJsonUtils.makeMuralFromJson(mMuralString);
                     insertDetails(m);
-                    imageUrls=m.getImageUrls();
+                    imageUrls = m.getImageUrls();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-
         addListener();
     }
 
-    public void insertDetails(Mural m){
-        Uri firstImage=Uri.parse(m.getImageUrls().get(0));
+    public void insertDetails(Mural m) {
+        Uri firstImage = Uri.parse(m.getImageUrls().get(0));
         Log.d(TAG, firstImage.toString());
         Picasso.get().load(firstImage).into(mDetailImgMural);
         mDetailImgMural.setAdjustViewBounds(true);
 
         if (language.equals("nl")) {
-            Log.d(TAG, "Language= " +language);
+            Log.d(TAG, "Language= " + language);
             mDetailTitle.setText(m.getTitleNL());
             mDetailMuralDescription.setText(m.getDescNL());
-            mDetailMaterial.setText("Materiaal: "+m.getMaterialNL());
-            mDetailPhotographer.setText("Fotograaf: "+m.getPhotographer());
-            mDetailAddress.setText("Adres: "+m.getAddress());
-        }
-
-        else {
+            mDetailMaterial.setText("Materiaal: " + m.getMaterialNL());
+            mDetailPhotographer.setText("Fotograaf: " + m.getPhotographer());
+            mDetailAddress.setText("Adres: " + m.getAddress());
+        } else if(language.equals("en")){
             mDetailTitle.setText(m.getTitleEN());
             mDetailMuralDescription.setText(m.getDescEN());
-            mDetailMaterial.setText("Material: "+m.getMaterialEN());
-            mDetailPhotographer.setText("Photographer: "+m.getPhotographer());
-            mDetailAddress.setText("Address: "+m.getAddress());
+            mDetailMaterial.setText("Material: " + m.getMaterialEN());
+            mDetailPhotographer.setText("Photographer: " + m.getPhotographer());
+            mDetailAddress.setText("Address: " + m.getAddress());
         }
-
     }
 
-    public void addListener(){
-        View.OnClickListener listener=new View.OnClickListener() {
-
+    public void addListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                Context context=v.getContext();
-                Class destination= PhotoActivity.class;
-                Intent photoIntent=new Intent(context,destination);
-                ArrayList<String> images=(ArrayList<String>) imageUrls;
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Class destination = PhotoActivity.class;
+                Intent photoIntent = new Intent(context, destination);
+                ArrayList<String> images = (ArrayList<String>) imageUrls;
                 photoIntent.putStringArrayListExtra("imageUrls", images);
                 startActivity(photoIntent);
             }
@@ -111,3 +108,5 @@ public class DetailActivity extends AppCompatActivity{
     }
 
 }
+
+
