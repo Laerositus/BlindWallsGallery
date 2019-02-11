@@ -34,7 +34,12 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".DetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DetailActivity" />
+        </activity>
 
         <activity android:name=".SettingsActivity"
             android:label="@string/settings"
@@ -46,7 +51,6 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize"
             android:launchMode="singleTop">
 
             <intent-filter>
@@ -57,7 +61,6 @@
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:configChanges="orientation|screenSize"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -65,7 +68,6 @@
         </activity>
         <activity
             android:name=".PhotoActivity"
-            android:configChanges="orientation|screenSize"
             android:parentActivityName=".DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

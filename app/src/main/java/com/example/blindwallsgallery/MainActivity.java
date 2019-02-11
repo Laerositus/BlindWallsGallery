@@ -28,14 +28,18 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements WallsAdapter.ItemClickListener {
 
-    private static final String TAG=MainActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private final String KEY_RECYCLER_STATE = "recycler_state";
-    private static Bundle mBundleRecyclerViewState;
-    private static RecyclerView mRecyclerView;
-    private static LinearLayoutManager layoutManager;
+    private final String LIST_STATE_KEY = "list_state_key";
+    private Parcelable savedRecyclerLayoutState;
+    private static Bundle mLayoutManager;
+    private static List<Mural> muralList;
+
+
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager layoutManager;
     private static WallsAdapter mWallsAdapter;
-    private static Toolbar toolbar;
+    private Toolbar toolbar;
     private static String language="en";
     private static String api;
 
@@ -56,15 +60,27 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mWallsAdapter=new WallsAdapter(this);
         mRecyclerView.setAdapter(mWallsAdapter);
 
-        loadMuralData();
-        showLoadingToast();
-
         mRecyclerView.setItemViewCacheSize(30);
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         toolbar=findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
+
+
+        if(savedInstanceState != null)
+        {
+            Log.i(TAG, "onCreate: bundle found");
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(LIST_STATE_KEY);
+            Objects.requireNonNull(mRecyclerView.getLayoutManager()).onRestoreInstanceState(savedRecyclerLayoutState);
+            Log.i(TAG, "onCreate: Murals retrieved from cache");
+            loadCachedMuralData();
+        }
+        else {
+            Log.i(TAG, "onCreate: Murals refreshed");
+            loadMuralData();
+            showLoadingToast();
+        }
     }
 
     public void showLoadingToast(){
@@ -80,18 +96,6 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
                 toastStr,
                 Toast.LENGTH_SHORT);
         toast.show();
-
-        mRecyclerView.setItemViewCacheSize(30);
-        mRecyclerView.setDrawingCacheEnabled(true);
-        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-        toolbar=findViewById(R.id.tb_main);
-        setSupportActionBar(toolbar);
-
-        Objects.requireNonNull(this.getSupportActionBar()).setDisplayShowCustomEnabled(true);
-        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
     }
 
     public static String getApi() {
@@ -114,6 +118,11 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         if((language.equals("en")||language.equals("nl"))){
             MainActivity.language=language;
         }
+    }
+
+    public static void setCache(List<Mural> cacheMurals) {
+        muralList = cacheMurals;
+        Log.i(TAG, "setCache: "+muralList.size()+" murals cached");
     }
 
     public static String getLanguage() {
@@ -162,30 +171,19 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         new BlindWallsTask().execute();
     }
 
+    public void loadCachedMuralData() {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mWallsAdapter.setMuralData(muralList);
+    }
+
     public static WallsAdapter getmWallsAdapter() {
         return mWallsAdapter;
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause was called");
-
-        // save RecyclerView state
-        mBundleRecyclerViewState = new Bundle();
-        Parcelable listState = Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState();
-        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume was called");
-
-        // restore RecyclerView state
-        if (mBundleRecyclerViewState != null) {
-            Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
-            Objects.requireNonNull(mRecyclerView.getLayoutManager()).onRestoreInstanceState(listState);
-        }
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: called");
+        outState.putParcelable(LIST_STATE_KEY, Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState());
     }
 }
