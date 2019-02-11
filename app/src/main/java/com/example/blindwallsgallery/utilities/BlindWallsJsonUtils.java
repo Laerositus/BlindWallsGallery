@@ -11,9 +11,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for all the utilities needed with JSON
+ */
 public class BlindWallsJsonUtils {
     private static final String TAG= BlindWallsJsonUtils.class.getSimpleName();
 
+    /**
+     * Method to make a simple Mural from a JSON format string
+     * @param json String given in JSON format
+     * @return Mural
+     * @throws JSONException Exception
+     */
     public static Mural makeMuralFromJson(String json) throws JSONException{
         Mural mural;
         Log.d(TAG, "makeMuralFromJSON was called");
@@ -51,30 +60,14 @@ public class BlindWallsJsonUtils {
         return mural;
     }
 
-    public static List<Mural> makeMuralFromApi(String response)throws JSONException {
+    /**
+     * Method to make a Mural from the API
+     * @param response Response frm the HTTP request
+     * @return List of all Murals given by API
+     * @throws JSONException Exception
+     */
+    static List<Mural> makeMuralFromApi(String response)throws JSONException {
         Log.d(TAG,"makeMuralFromApi was called");
-
-//        final int OWM_ID="id";
-//        final int OWM_
-//        final int OWM_
-//        final int OWM_
-
-//        final double OWM_
-
-//        final String OWM_AUTHOR_ID="authorID";
-//        final String OWM_NUMBER_ON_MAP="numberOnMap";
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
-//        final String OWM_
 
         List<Mural>murals=new ArrayList<>();
 
@@ -127,6 +120,11 @@ public class BlindWallsJsonUtils {
         return murals;
     }
 
+    /**
+     * Constructs a String in JSON Format from the mural given.
+     * @param mural Mural to be set into JSON
+     * @return String of JSON formatted Mural
+     */
     public static String makeJsonFromMural(Mural mural){
         Log.d(TAG, "makeJsonFromMural was called");
         int id=mural.getId();
