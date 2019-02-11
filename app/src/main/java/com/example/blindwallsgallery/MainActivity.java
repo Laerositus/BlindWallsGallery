@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     /**
      * Standard method to create the main view.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     /**
      * Sets the language of the menu items
-     * @param menu
+     * @param menu Menu
      */
     public void setMenuLanguage(Menu menu){
         if(language.equals("en")){
@@ -184,8 +184,8 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     /**
      * Describes what happens when a option in the menu is selected.
      * If "Settings" was clicked
-     * @param item
-     * @return
+     * @param item MenuItem
+     * @return Boolean
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     /**
-     *
+     * Method to load the Muraldata into the main view
      */
     public void loadMuralData(){
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -213,39 +213,10 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     /**
-     *
-     * @return
+     * Method to get the used Wallsadapter
+     * @return Wallsadapter
      */
     public static WallsAdapter getmWallsAdapter() {
         return mWallsAdapter;
-    }
-
-    /**
-     *
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause was called");
-
-        // save RecyclerView state
-        mBundleRecyclerViewState = new Bundle();
-        Parcelable listState = Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState();
-        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
-    }
-
-    /**
-     *
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume was called");
-
-        // restore RecyclerView state
-        if (mBundleRecyclerViewState != null) {
-            Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
-            Objects.requireNonNull(mRecyclerView.getLayoutManager()).onRestoreInstanceState(listState);
-        }
     }
 }

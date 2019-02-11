@@ -1,37 +1,30 @@
 package com.example.blindwallsgallery;
 
-import android.app.Activity;
+import com.example.blindwallsgallery.data.Mural;
+import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
+
 import android.content.Context;
 import android.content.Intent;
-import android.net.Network;
+
+import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.blindwallsgallery.data.Mural;
-import com.example.blindwallsgallery.utilities.BlindWallsJsonUtils;
-import com.example.blindwallsgallery.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Class for the detailed view of a selected mural
  */
 public class DetailActivity extends AppCompatActivity {
     private static final String TAG = DetailActivity.class.getSimpleName();
 
     private ImageView mDetailImgMural;
-
     private TextView mDetailTitle;
     private TextView mDetailMaterial;
     private TextView mDetailAddress;
@@ -42,10 +35,9 @@ public class DetailActivity extends AppCompatActivity {
     private Mural m;
     private String language;
 
-
     /**
-     *
-     * @param savedInstanceState
+     * Main onCreate method to create the screen
+     * @param savedInstanceState Bundle
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +51,26 @@ public class DetailActivity extends AppCompatActivity {
         mDetailMuralDescription = findViewById(R.id.tv_mural_description);
 
         Intent parentIntent = getIntent();
+        getIntentExtra(parentIntent);
 
+        addListener();
+    }
+
+    /**
+     * Gets the content from MainActivity that was put in the Intent
+     * @param parentIntent Intent
+     */
+    public void getIntentExtra(Intent parentIntent){
         if (parentIntent != null) {
+            //Checks if there is an extra called "language"
             if (parentIntent.hasExtra("language")) {
                 language = parentIntent.getStringExtra("language");
             }
+            //Checks if there is an extra called "mural"
             if (parentIntent.hasExtra("mural")) {
                 mMuralString = parentIntent.getStringExtra("mural");
                 try {
+                    //Remakes the mural from Json
                     m=BlindWallsJsonUtils.makeMuralFromJson(mMuralString);
                     insertDetails(m);
                     imageUrls = m.getImageUrls();
@@ -75,12 +79,11 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         }
-        addListener();
     }
 
     /**
-     *
-     * @param m
+     * Inserts the details into the views for the detailed view.
+     * @param m Mural
      */
     public void insertDetails(Mural m){
         Log.d(TAG, "insertDetails was called");
@@ -91,6 +94,7 @@ public class DetailActivity extends AppCompatActivity {
         mDetailImgMural.setAdjustViewBounds(true);
         Log.d(TAG, "Language= " +language);
 
+        //Checks what language should be used
         if (language.equals("nl")) {
 
             mDetailTitle.setText(m.getTitleNL());
@@ -109,7 +113,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Listener for the view of the image to go to the PhotoActivity with an arrayList of the URLs to display
      */
     public void addListener() {
         View.OnClickListener listener = new View.OnClickListener() {
@@ -127,8 +131,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param v
+     * Listener for the button to open a Maps screen with the location of the mural
+     * @param v View
      */
     public void onClickOpenMapButton(View v) {
         Log.i(TAG, "showMap: coords(LatLng): " + m.getLatitude() + ", " + m.getLongitude());
