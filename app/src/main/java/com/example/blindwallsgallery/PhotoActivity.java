@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Activity for displaying photos after selected from the Details screen
  */
 public class PhotoActivity extends AppCompatActivity {
 
@@ -32,8 +32,8 @@ public class PhotoActivity extends AppCompatActivity {
     private String TAG = PhotoActivity.class.getSimpleName();
 
     /**
-     *
-     * @param savedInstanceState
+     * main method to create the screen
+     * @param savedInstanceState Bundle
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,8 @@ public class PhotoActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param parentIntent
+     * Gets the contents of the Intent
+     * @param parentIntent Intent
      */
     public void getIntentExtras(Intent parentIntent){
         if(parentIntent!=null){
@@ -73,12 +73,12 @@ public class PhotoActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Shows the toast that displays the amount of photo's available
      */
     public void showPhotoToast(){
         String language=MainActivity.getLanguage();
 
-        String toastStr = null;
+        String toastStr;
         if (language.equals("nl")) {
             toastStr = "Foto's: " + imageUrls.size();
         }
