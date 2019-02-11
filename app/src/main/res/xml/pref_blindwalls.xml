@@ -17,5 +17,4 @@
         android:title="API"
         android:icon="@mipmap/ic_launcher_round"/>
 
-
 </PreferenceScreen>
