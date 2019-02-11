@@ -8,4 +8,5 @@
     <string name="setting_en">English</string>
     <string name="api">https://api.blindwalls.gallery/apiv2/murals</string>
     <string name="donate">Donate!</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
