@@ -22,6 +22,8 @@ public class BlindWallsJsonUtils {
         JSONObject result=new JSONObject(json);
 
         int id=result.getInt("id");
+        double latitude = result.getDouble("latitude");
+        double longitude = result.getDouble("longitude");
         String address=result.getString("address");
         int numberOnMap=result.getInt("numberOnMap");
         String photographer=result.getString("photographer");
@@ -45,7 +47,7 @@ public class BlindWallsJsonUtils {
             String url = "https://api.blindwalls.gallery/" + tempUrl;
             imageUrls.add(url);
         }
-        mural=new Mural(id,address,numberOnMap,photographer,titleEN,titleNL,descEN,descNL,materialEN,materialNL,imageUrls);
+        mural=new Mural(id,latitude,longitude,address,numberOnMap,photographer,titleEN,titleNL,descEN,descNL,materialEN,materialNL,imageUrls);
         return mural;
     }
 
@@ -81,6 +83,8 @@ public class BlindWallsJsonUtils {
         for(int n=0;n<results.length();n++) {
             JSONObject mural = results.getJSONObject(n);
             int id = mural.getInt("id");
+            double latitude = mural.getDouble("latitude");
+            double longitude = mural.getDouble("longitude");
             int authorID = mural.getInt("authorID");
             int numberOnMap = mural.getInt("numberOnMap");
             int year = mural.getInt("year");
@@ -140,7 +144,7 @@ public class BlindWallsJsonUtils {
 
 
 
-            Mural muralObject=new Mural(id,date,authorID,address,numberOnMap,videoUrl,year,photographer,videoAuthor,author,rating,titleEN,titleNL,descrEN,descrNL,materialEN,materialNL,categoryEN,categoryNL,imageUrls);
+            Mural muralObject=new Mural(id,latitude,longitude,date,authorID,address,numberOnMap,videoUrl,year,photographer,videoAuthor,author,rating,titleEN,titleNL,descrEN,descrNL,materialEN,materialNL,categoryEN,categoryNL,imageUrls);
             //Log.d(TAG,mural.toString());
             murals.add(muralObject);
 
@@ -167,6 +171,13 @@ public class BlindWallsJsonUtils {
         String materialEnS="\"en\":\""+materialEN+"\",";
         String materialNlS="\"nl\":\""+materialNL+"\"},";
 
+        double latitude=mural.getLatitude();
+        String latitudeS="\"latitude\":\""+latitude+"\",";
+
+        double longitude=mural.getLongitude();
+        String longitudeS="\"longitude\":\""+longitude+"\",";
+
+
         String address=mural.getAddress();
         String addressS="\"address\":\""+address+"\",";
 
@@ -186,7 +197,7 @@ public class BlindWallsJsonUtils {
         List<String> imageUrls=mural.getImageUrls();
 
         String images="\"images\":[";
-        String muralJson="{"+idS+addressS+numberOnMapS+photographerS+title+titleEnS+titleNlS+description+descEnS+descNlS+material+materialEnS+materialNlS+images;
+        String muralJson="{"+idS+latitudeS+longitudeS+addressS+numberOnMapS+photographerS+title+titleEnS+titleNlS+description+descEnS+descNlS+material+materialEnS+materialNlS+images;
 
         for(int i=0;i<imageUrls.size();i++) {
             String url=imageUrls.get(i);

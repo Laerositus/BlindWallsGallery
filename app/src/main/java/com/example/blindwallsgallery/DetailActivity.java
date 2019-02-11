@@ -38,6 +38,7 @@ public class DetailActivity extends AppCompatActivity{
     private TextView mDetailMuralDescription;
     private String mMuralString;
     private List<String> imageUrls;
+    private Mural m;
 
 
     protected void onCreate(Bundle savedInstanceState){
@@ -57,7 +58,7 @@ public class DetailActivity extends AppCompatActivity{
             if(parentIntent.hasExtra("mural")){
                 mMuralString=parentIntent.getStringExtra("mural");
                 try {
-                    Mural m=BlindWallsJsonUtils.makeMuralFromJson(mMuralString);
+                    m=BlindWallsJsonUtils.makeMuralFromJson(mMuralString);
                     insertDetails(m);
                     imageUrls=m.getImageUrls();
                 } catch (Exception e) {
@@ -70,13 +71,14 @@ public class DetailActivity extends AppCompatActivity{
     }
 
     public void insertDetails(Mural m){
+        Log.d(TAG, "insertDetails was called");
         Uri firstImage=Uri.parse(m.getImageUrls().get(0));
-        Log.d(TAG, firstImage.toString());
+        Log.i(TAG, firstImage.toString());
         Picasso.get().load(firstImage).into(mDetailImgMural);
         mDetailImgMural.setAdjustViewBounds(true);
+        Log.d(TAG, "Language= " +language);
 
         if (language.equals("nl")) {
-            Log.d(TAG, "Language= " +language);
             mDetailTitle.setText(m.getTitleNL());
             mDetailMuralDescription.setText(m.getDescNL());
             mDetailMaterial.setText("Materiaal: "+m.getMaterialNL());
@@ -110,4 +112,30 @@ public class DetailActivity extends AppCompatActivity{
         mDetailImgMural.setOnClickListener(listener);
     }
 
+    public void onClickOpenAddressButton(View v) {
+
+        String addressString = m.getAddress() + ", Breda";
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("geo")
+                .path("0,0")
+                .appendQueryParameter("q", addressString);
+        Uri addressUri = builder.build();
+        showMap(addressUri);
+    }
+
+    private void showMap(Uri geoLocation) {
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setData(geoLocation);
+//        if (intent.resolveActivity(getPackageManager()) != null) {
+//            startActivity(intent);
+//        }
+        Log.i(TAG, "showMap: coords(LatLng): " + m.getLatitude() + ", " + m.getLongitude());
+        Context context=this;
+        Class destination=MapsActivity.class;
+        Intent detailIntent=new Intent(context,destination);
+        detailIntent.putExtra("latitude", m.getLatitude());
+        detailIntent.putExtra("longitude",m.getLongitude());
+        detailIntent.putExtra("author",m.getAuthor());
+        startActivity(detailIntent);
+    }
 }
