@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
         loadMuralData();
 
-        String toastStr = null;
+        setupSharedPreferences();
+
+        String toastStr;
         if (language.equals("nl")) {
             toastStr = "Murals opgehaald";
         }
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         toolbar=findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
 
-        setupSharedPreferences();
+
     }
 
     public void setupSharedPreferences(){
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     @Override
     public void onItemClick(Mural mural) {
+        setupSharedPreferences();
         String muralString= BlindWallsJsonUtils.makeJsonFromMural(mural);
         Context context=this;
         Class destination=DetailActivity.class;
