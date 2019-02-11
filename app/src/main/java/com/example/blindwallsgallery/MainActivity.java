@@ -3,7 +3,6 @@ package com.example.blindwallsgallery;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -230,11 +229,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mRecyclerView.setVisibility(View.VISIBLE);
         new BlindWallsTask().execute();
     }
-
-    public static WallsAdapter getmWallsAdapter() {
-        return mWallsAdapter;
-    }
-
+    
     public void loadCachedMuralData() {
         mRecyclerView.setVisibility(View.VISIBLE);
         mWallsAdapter.setMuralData(muralList);
