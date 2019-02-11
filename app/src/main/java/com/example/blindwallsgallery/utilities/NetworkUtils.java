@@ -21,7 +21,7 @@ public class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    private static String mBlindWallsApi;
+    private static String mBlindWallsApi="https://api.blindwalls.gallery/apiv2/murals";
 
     private static final String format="json";
 

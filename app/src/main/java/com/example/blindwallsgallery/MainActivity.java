@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     private LinearLayoutManager layoutManager;
     private static WallsAdapter mWallsAdapter;
     private Toolbar toolbar;
-    private static String language;
+    private static String language="en";
     private static String api;
 
     private static final int temp_mNumOfItems=76;
@@ -52,12 +52,12 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         layoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(layoutManager);
 
+        setupSharedPreferences();
+
         mWallsAdapter=new WallsAdapter(this);
         mRecyclerView.setAdapter(mWallsAdapter);
 
         loadMuralData();
-
-        setupSharedPreferences();
 
         String toastStr=null;
         if (language.equals("nl")) {
@@ -92,13 +92,13 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     public void setApi(String api){
         if(api!=null){
-            this.api=api;
+            MainActivity.api =api;
         }
     }
 
     public void setLanguage(String language){
         if((!language.equals("en")||!language.equals("nl"))&&language!=null){
-            this.language=language;
+            MainActivity.language=language;
         }
     }
 
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         Class destination=DetailActivity.class;
         Intent detailIntent=new Intent(context,destination);
         detailIntent.putExtra("mural",muralString);
-        detailIntent.putExtra("language",this.language);
+        detailIntent.putExtra("language",MainActivity.language);
         startActivity(detailIntent);
     }
 

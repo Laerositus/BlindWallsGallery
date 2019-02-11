@@ -60,6 +60,7 @@ public class DetailActivity extends AppCompatActivity {
                 mMuralString = parentIntent.getStringExtra("mural");
                 try {
                     Mural m = BlindWallsJsonUtils.makeMuralFromJson(mMuralString);
+                    Log.d(TAG, m.toString());
                     insertDetails(m);
                     imageUrls = m.getImageUrls();
                 } catch (Exception e) {
@@ -83,7 +84,8 @@ public class DetailActivity extends AppCompatActivity {
             mDetailMaterial.setText("Materiaal: " + m.getMaterialNL());
             mDetailPhotographer.setText("Fotograaf: " + m.getPhotographer());
             mDetailAddress.setText("Adres: " + m.getAddress());
-        } else if(language.equals("en")){
+
+        } else if (language.equals("en")){
             mDetailTitle.setText(m.getTitleEN());
             mDetailMuralDescription.setText(m.getDescEN());
             mDetailMaterial.setText("Material: " + m.getMaterialEN());
