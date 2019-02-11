@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/yeseva_one"
-            android:onClick="onClickOpenAddressButton"
+            android:onClick="onClickOpenMapButton"
             android:text="Open in Maps"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

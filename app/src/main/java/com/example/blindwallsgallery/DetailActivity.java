@@ -112,23 +112,7 @@ public class DetailActivity extends AppCompatActivity{
         mDetailImgMural.setOnClickListener(listener);
     }
 
-    public void onClickOpenAddressButton(View v) {
-
-        String addressString = m.getAddress() + ", Breda";
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("geo")
-                .path("0,0")
-                .appendQueryParameter("q", addressString);
-        Uri addressUri = builder.build();
-        showMap(addressUri);
-    }
-
-    private void showMap(Uri geoLocation) {
-//        Intent intent = new Intent(Intent.ACTION_VIEW);
-//        intent.setData(geoLocation);
-//        if (intent.resolveActivity(getPackageManager()) != null) {
-//            startActivity(intent);
-//        }
+    public void onClickOpenMapButton(View v) {
         Log.i(TAG, "showMap: coords(LatLng): " + m.getLatitude() + ", " + m.getLongitude());
         Context context=this;
         Class destination=MapsActivity.class;
