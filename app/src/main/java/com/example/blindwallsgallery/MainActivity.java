@@ -78,6 +78,11 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
         toolbar=findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
+
+        Objects.requireNonNull(this.getSupportActionBar()).setDisplayShowCustomEnabled(true);
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
     }
 
     public static String getApi() {
