@@ -18,6 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity for displaying photos after selected from the Details screen
+ */
 public class PhotoActivity extends AppCompatActivity {
 
     private LinearLayout mLinearLayout;
@@ -26,10 +29,12 @@ public class PhotoActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
     private static PhotosAdapter mPhotosAdapter;
-    private String language = "en";
-
     private String TAG = PhotoActivity.class.getSimpleName();
 
+    /**
+     * main method to create the screen
+     * @param savedInstanceState Bundle
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,26 +48,37 @@ public class PhotoActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         Intent parentIntent=getIntent();
-        Log.d(TAG, parentIntent.toString());
+        getIntentExtras(parentIntent);
 
+        mPhotosAdapter=new PhotosAdapter(imageUrls);
+        mRecyclerView.setAdapter(mPhotosAdapter);
+        mRecyclerView.setItemViewCacheSize(30);
+        mRecyclerView.setDrawingCacheEnabled(true);
+        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
+        showPhotoToast();
+    }
 
+    /**
+     * Gets the contents of the Intent
+     * @param parentIntent Intent
+     */
+    public void getIntentExtras(Intent parentIntent){
         if(parentIntent!=null){
             if(parentIntent.hasExtra("imageUrls")){
                 imageUrls=parentIntent.getStringArrayListExtra("imageUrls");
                 Log.d(TAG, imageUrls.toString());
             }
         }
+    }
 
-        mPhotosAdapter=new PhotosAdapter(imageUrls);
-        mRecyclerView.setAdapter(mPhotosAdapter);
+    /**
+     * Shows the toast that displays the amount of photo's available
+     */
+    public void showPhotoToast(){
+        String language=MainActivity.getLanguage();
 
-        mRecyclerView.setItemViewCacheSize(30);
-        mRecyclerView.setDrawingCacheEnabled(true);
-        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-
-        String toastStr = null;
+        String toastStr;
         if (language.equals("nl")) {
             toastStr = "Foto's: " + imageUrls.size();
         }
@@ -74,7 +90,6 @@ public class PhotoActivity extends AppCompatActivity {
                 toastStr,
                 Toast.LENGTH_SHORT);
         toast.show();
-
     }
 
 }

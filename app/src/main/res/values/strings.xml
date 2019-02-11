@@ -3,10 +3,12 @@
     <string name="mural_img_first">Image of the mural</string>
     <string name="test">Hello world!</string>
     <string name="name_app">Blind Walls Gallery</string>
-    <string name="settings">Settings</string>
+    <string name="settings_string_en">Settings</string>
     <string name="setting_nl">Nederlands</string>
     <string name="setting_en">English</string>
     <string name="api">https://api.blindwalls.gallery/apiv2/murals</string>
     <string name="donate">Donate!</string>
     <string name="title_activity_maps">Map</string>
+    <string name="settings_string_nl">Instellingen</string>
+    <string name="donate_nl">Doneren!</string>
 </resources>
