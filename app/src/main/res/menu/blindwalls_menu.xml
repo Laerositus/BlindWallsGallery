@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="1"
-        android:title="@string/settings"
+        android:orderInCategory="0"
+        android:title="@string/settings_string_en"
         app:showAsAction="never"
         android:icon="@mipmap/ic_launcher_round"/>
 
     <item
-        android:orderInCategory="2"
+        android:orderInCategory="1"
         android:id="@+id/action_donate"
         android:title="@string/donate"
         android:icon="@drawable/baseline_euro_symbol_black_18dp"/>

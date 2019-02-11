@@ -42,10 +42,8 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     private static String language="en";
     private static String api;
 
-    private static final int temp_mNumOfItems=76;
-
     /**
-     *
+     * Standard method to create the main view.
      * @param savedInstanceState
      */
     @Override
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     /**
-     *
+     * Method to show the toast.
      */
     public void showLoadingToast() {
         String toastStr = null;
@@ -94,14 +92,14 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
 
     /**
      * Returns the api used in sharedPreferences to be used in the application.
-     * @returns String
+     * @return String
      */
     public static String getApi() {
         return api;
     }
 
     /**
-     *
+     * Method so setup the shared preferences and set the settings to the rest of the application
      */
     public void setupSharedPreferences(){
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
@@ -110,8 +108,8 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     /**
-     *
-     * @param api
+     * Sets the api given by the sharedPreferences from setupSharedPreferences
+     * @param api String
      */
     public void setApi(String api){
         if(api!=null){
@@ -120,26 +118,28 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     /**
-     *
-     * @param language
+     * Sets the language selected in the settings from sharedPreferences
+     * @param language String
      */
     public void setLanguage(String language){
-        if((!language.equals("en")||!language.equals("nl"))/*&&language!=null*/){
+        if((language.equals("en")||language.equals("nl"))){
             MainActivity.language=language;
         }
     }
 
     /**
-     *
-     * @return
+     * Returns the language from sharedPreferences
+     * @return String
      */
     public static String getLanguage() {
         return language;
     }
 
     /**
-     *
-     * @param mural
+     * Method overridden from ClickHandler set up in WallsAdapter to give an intent and go to DetailActivity.
+     * Also gives the mural that was selected to the activity so the right mural will be shown.
+     * Also shares the language attribute to show the details sin the preferred language.
+     * @param mural Mural
      */
     @Override
     public void onItemClick(Mural mural) {
@@ -154,19 +154,36 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     /**
-     *
-     * @param menu
-     * @return
+     * Overridden method to inflate the menu when the options menu is created.
+     * @param menu Menu
+     * @return Boolean
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.blindwalls_menu,menu);
+        setMenuLanguage(menu);
         return true;
     }
 
     /**
-     *
+     * Sets the language of the menu items
+     * @param menu
+     */
+    public void setMenuLanguage(Menu menu){
+        if(language.equals("en")){
+            menu.getItem(0).setTitle(R.string.settings_string_en);
+            menu.getItem(1).setTitle(R.string.donate);
+        }
+        else if(language.equals("nl")){
+            menu.getItem(0).setTitle(R.string.settings_string_nl);
+            menu.getItem(1).setTitle(R.string.donate_nl);
+        }
+    }
+
+    /**
+     * Describes what happens when a option in the menu is selected.
+     * If "Settings" was clicked
      * @param item
      * @return
      */
@@ -177,20 +194,15 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
             Intent startSettingsActivity=new Intent(this,SettingsActivity.class);
             startActivity(startSettingsActivity);
             return true;
+
         }else if(id==R.id.action_donate) {
             Intent startDonateActivity = new Intent(Intent.ACTION_VIEW);
             startDonateActivity.setData(Uri.parse("https://streamlabs.com/laerositus"));
             startActivity(startDonateActivity);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /**
-     *
-     * @param imageUrls
-     */
-    @Override
-    public void onItemClick(List<String> imageUrls) { }
 
     /**
      *
