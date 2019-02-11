@@ -8,6 +8,8 @@ import java.util.List;
 public class Mural {
 
     private int id;
+    private double latitude;
+    private double longitude;
     private String date;
     private int authorID;
     private String address;
@@ -31,8 +33,10 @@ public class Mural {
     private List<String> imageUrls;
 
     /* Constructor */
-    public Mural(int id, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, String rating, String titleEN, String titleNL, String descEN, /*String authorDescEN,*/ String descNL, /*String authorDescNL,*/ String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
+    public Mural(int id, double latitude, double longitude, String date, int authorID, String address, int numberOnMap, String videoUrl, int year, String photographer, String videoAuthor, String author, String rating, String titleEN, String titleNL, String descEN, /*String authorDescEN,*/ String descNL, /*String authorDescNL,*/ String materialEN, String materialNL, String categoryEN, String categoryNL, List<String> imageUrls) {
         this.id = id;
+        this.latitude=latitude;
+        this.longitude=longitude;
         this.date = date;
         this.authorID = authorID;
         this.address = address;
@@ -57,8 +61,10 @@ public class Mural {
     }
 
     /* Constructor*/
-    public Mural(int id, String address, int numberOnMap, String photographer, String titleEN, String titleNL, String descEN,String descNL, String materialEN,String materialNL,List<String> imageUrls){
+    public Mural(int id, double latitude, double longitude, String address, int numberOnMap, String photographer, String titleEN, String titleNL, String descEN,String descNL, String materialEN,String materialNL,List<String> imageUrls){
         this.id=id;
+        this.latitude=latitude;
+        this.longitude=longitude;
         this.address=address;
         this.numberOnMap=numberOnMap;
         this.photographer=photographer;
@@ -188,5 +194,13 @@ public class Mural {
 
     public List<String> getImageUrls() {
         return imageUrls;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }
