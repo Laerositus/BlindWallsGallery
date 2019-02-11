@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -58,7 +59,17 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
         mRecyclerView.setAdapter(mWallsAdapter);
 
         loadMuralData();
+        showLoadingToast();
 
+        mRecyclerView.setItemViewCacheSize(30);
+        mRecyclerView.setDrawingCacheEnabled(true);
+        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        toolbar=findViewById(R.id.tb_main);
+        setSupportActionBar(toolbar);
+    }
+
+    public void showLoadingToast(){
         String toastStr=null;
         if (language.equals("nl")) {
             toastStr = "Murals opgehaald";
@@ -71,13 +82,6 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
                 toastStr,
                 Toast.LENGTH_SHORT);
         toast.show();
-
-        mRecyclerView.setItemViewCacheSize(30);
-        mRecyclerView.setDrawingCacheEnabled(true);
-        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-        toolbar=findViewById(R.id.tb_main);
-        setSupportActionBar(toolbar);
     }
 
     public static String getApi() {
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
     }
 
     public void setLanguage(String language){
-        if((!language.equals("en")||!language.equals("nl"))&&language!=null){
+        if((!language.equals("en")||!language.equals("nl"))/*&&language!=null*/){
             MainActivity.language=language;
         }
     }
@@ -132,6 +136,10 @@ public class MainActivity extends AppCompatActivity implements WallsAdapter.Item
             Intent startSettingsActivity=new Intent(this,SettingsActivity.class);
             startActivity(startSettingsActivity);
             return true;
+        }else if(id==R.id.action_donate) {
+            Intent startDonateActivity = new Intent(Intent.ACTION_VIEW);
+            startDonateActivity.setData(Uri.parse("https://streamlabs.com/laerositus"));
+            startActivity(startDonateActivity);
         }
         return super.onOptionsItemSelected(item);
     }
